@@ -7,6 +7,7 @@ const app = express();
 const router = require('express').Router();
 const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 // Middleware
 app.use(cors());
@@ -15,24 +16,11 @@ app.use(morgan("dev"));
 
 // Routes
 const authorizedRoutes = require("./src/routes/authorized");
+console.log('authorized routes loaded');
 app.use("/api/authorized", authorizedRoutes);
 
 const commentRoutes = require("./src/routes/comments");
 app.use("/api/comments", commentRoutes);
-
-app.get("/", (req, res) => res.send("API is running"));
-
-const client = require("./src/db/quarky");
-
-// app.get('/api/user', async (req, res, next) => {
-//   try {
-//     const SQL = `SELECT * from notes;`;
-//     const response = await client.query(SQL);
-//     res.send(response.rows);
-//   } catch (error) {
-//     next (error);
-//   }
-// });
 
 app.post("/comments", async (req, res) => {
   const { articleUrl, articleTitle, content, userId } = req.body;
@@ -49,15 +37,24 @@ app.post("/comments", async (req, res) => {
   res.json(comment);
 });
 
-// app.get('/api/db-test', async (req, res) => {
-//   try {
-//     const result = await client.query('SELECT NOW()');
-//     res.send(`DB connected. Current time: ${result.rows[0].now}`);
-//   } catch (err) {
-//     console.error('DB connection failed:', err);
-//     res.status(500).send('Database connection failed');
-//   }
-// });
+
+// Serves the HTML file that Vite builds
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client/dist/index.html"));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).send(err.message || "Internal server error.");
+});
+
+// Default to 404 if no other route matched
+app.use((req, res) => {
+  res.status(404).send("Not found.");
+});
+
+
 
 // Export the app
 module.exports = {
@@ -66,4 +63,5 @@ module.exports = {
   bcrypt, 
   jwt,
   authorizedRoutes, 
-  commentRoutes}
+  commentRoutes
+}

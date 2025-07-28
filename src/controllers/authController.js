@@ -1,6 +1,8 @@
 const { bcrypt, prisma, jwt } = require('../../app');
 require('dotenv').config();
 
+const WEB_TOKEN = process.env.WEB_TOKEN;
+
 const login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -17,7 +19,6 @@ const login = async (req, res) => {
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
-
         if (!isPasswordValid) {
             return res.status(401).json({
                 statusCode: 401,
@@ -25,11 +26,13 @@ const login = async (req, res) => {
             });
         }
 
-        const token = jwt.sign({
+        const token = jwt.sign(
+            {
             id: user.id, username: user.username
-        },
-        process.env.WEB_TOKEN
-    );
+            },
+            WEB_TOKEN,
+            { expiresIn: '2h'}
+       );
 
     const {password: _, ...userWithoutPassword } = user;
 
@@ -39,30 +42,57 @@ const login = async (req, res) => {
     });
 
     } catch (error) {
-        console.error(error);
+        console.error('login error', error);
         res.status(500).json({
             statusCode: 500,
-            message: 'server error',
+            message: 'server error duriong login',
         });
     }
 };
 
 const register = async (req, res) => {
     const { username, email, password } = req.body;
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const registerUser = await prisma.user.create({
-        data: {
-            username,
-            password: hashedPassword,
-        },
-    });
-    if (registerUser) {
+
+    try {
+        const existingUser = await.prisma.user.findFirst({
+            where: { username },
+        });
+
+        if (existingUser) {
+            return res.status(409).json({ mesage: 'username already exists'});
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = await.prisma.user.create({
+            data: {
+                username,
+                email, 
+                password: hashedPassword,
+            },
+        });
+
         const token = jwt.sign(
-          {
-            id: registerUser.id,
-            username: registerUser.username,
-          }
-    )
+            { id: newUser.is, username: newUser.username },
+            WEB_TOKEN,
+            { expiresIn: '2h' }
+        );
+
+        const { password: _, ...userWithoutPassword } = newUser;
+
+        res.status(201).json({
+            user: userWithoutPassword,
+            token,
+        });
+
+    } catch (error) {
+        console.error('registration error, error');
+        res.status(500).json({ message: 'server error during registration' })
     }
+};
+
+module.exports = {
+    login,
+    register,
 }
