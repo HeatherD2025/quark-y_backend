@@ -1,26 +1,29 @@
-const { jwt } = require('../../app');
-require('dotenv').config();
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const WEB_TOKEN = process.env.WEB_TOKEN;
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const LoggedIn = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
+const loggedIn = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
 
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ error: "you must be logged in to access this resource" })
-    }
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: "you must be logged in to access this resource" });
+  }
 
-    const token = authHeader.split('')[1];
+  const token = authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(403).json({ error: 'Access token missing from header.' });
+  }
 
-// Verify the token, attach to request object, call middleware and log errors
-    try {
-    const decoded = jwt.verify(token, WEB_TOKEN)
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     next();
- } catch (error) {
-    console.error('Error verifying token', error)
-    return res.status(401).json({ error: 'invalid token'})
- }
-}
+  } catch (error) {
+    console.error('Error verifying token', error.message);
+    return res.status(401).json({ error: 'invalid token' });
+  }
+};
 
-module.exports = { LoggedIn };
+export { loggedIn };

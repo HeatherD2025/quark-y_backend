@@ -1,14 +1,21 @@
-const express = require('express');
+import express from 'express';
+import 'dotenv/config';
+import { loggedIn } from '../middleware/loggedIn.js';
+import { getComments, createComment, updateComment, deleteComment } from '../controllers/commentController.js';
+
 const router = express.Router();
-require('dotenv').config();
-import { LoggedIn } from '../middleware/loggedIn';
 
-const { getComments, createComment, deleteComment } = require('../controllers/commentController');
+router.get('/articles/:articleUrl/comments', loggedIn, getComments);
+router.post('/articles/:articleUrl/comments', loggedIn, createComment);
+router.put('/articles/:articleUrl/comments/:commentId', loggedIn, updateComment);
+router.delete('/articles/:articleUrl/comments/:commentId', loggedIn, deleteComment);
 
-router.get('/articles/:articleUrl/comments', LoggedIn, getComments);
+export default router;
 
-router.post('/articles/:articleUrl/comments', LoggedIn, createComment);
+console.log('Routes in comments.js:');
+router.stack.forEach((layer) => {
+  if (layer.route) {
+    console.log(Object.keys(layer.route.methods)[0].toUpperCase(), layer.route.path);
+  }
+});
 
-router.delete('/articles/:articleUrl/comments', LoggedIn, deleteComment);
-
-module.exports = router;

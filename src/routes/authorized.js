@@ -1,10 +1,20 @@
-const express = require('express');
+import express from 'express';
+import 'dotenv/config';
+import { loggedIn } from '../middleware/loggedIn.js';
+import { login, register, getMe } from '../controllers/authController.js';
+
 const router = express.Router();
-require('dotenv').config();
 
-const { login, register } = require('../controllers/authController');
+router.post('/register', register);  
+router.post('/login', login);   
+router.get('/me', loggedIn, getMe);  
 
-router.post('/login', login);
-router.post('/register', register);
+export default router;
 
-module.exports = router;
+console.log('Routes in authorized.js:');
+router.stack.forEach((layer) => {
+  if (layer.route) {
+    console.log(Object.keys(layer.route.methods)[0].toUpperCase(), layer.route.path);
+  }
+});
+

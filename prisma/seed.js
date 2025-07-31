@@ -1,11 +1,12 @@
-const { PrismaClient } = require('../generated/prisma');
-const bcrypt = require('bcrypt');
-require('dotenv').config();
+import { PrismaClient } from '../generated/prisma/index.js';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const prisma = new PrismaClient();
 
 async function main() {
-
     await prisma.user.deleteMany();
 
     const passwordPlain = process.env.ADMIN_PASSWORD;
@@ -14,22 +15,20 @@ async function main() {
     // updates my user details if exists, or creates if not
     await prisma.user.upsert({
         where: { email: "heatherdeliso@gmail.com" },
-        update: 
-            {
-                username: 'QuarkyMOD',
-                password: hashedPassword,
-                isAdmin: true,
-                dateUpdated: new Date(),
-            },
-        create: 
-            {
-                username: 'QuarkyMOD',
-                email: 'heatherdeliso@gmail.com',
-                password: hashedPassword,
-                isAdmin: true,
-                dateCreated: new Date(),
-                dateUpdated: new Date(),
-            },
+        update: {
+            username: 'QuarkyMOD',
+            password: hashedPassword,
+            isAdmin: true,
+            dateUpdated: new Date(),
+        },
+        create: {
+            username: 'QuarkyMOD',
+            email: 'heatherdeliso@gmail.com',
+            password: hashedPassword,
+            isAdmin: true,
+            dateCreated: new Date(),
+            dateUpdated: new Date(),
+        },
     });
 
     const users = [
@@ -40,7 +39,7 @@ async function main() {
     ];
 
     for (const user of users) {
-        const hashed = await bcrypt.hash(user.password, 10)
+        const hashed = await bcrypt.hash(user.password, 10);
         await prisma.user.create({
             data: {
                 username: user.username,
@@ -49,18 +48,18 @@ async function main() {
                 isAdmin: false,
                 dateCreated: new Date(),
                 dateUpdated: new Date(),
-            }
-        })
+            },
+        });
     }
 
     console.log('seed data created successfully');
 }
 
 main()
-.catch((e) => {
-    console.error('Error seeding data', e);
-    process.exit(1);
-})
-.finally(async () => {
-    await prisma.$disconnect();
-});
+    .catch((e) => {
+        console.error('Error seeding data', e);
+        process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
