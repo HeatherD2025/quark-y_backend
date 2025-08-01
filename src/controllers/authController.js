@@ -44,10 +44,9 @@ export const login = async (req, res) => {
 
 
 export const register = async (req, res) => {
-      console.log('Request body:', req.body);
 
-        if (!req.body || Object.keys(req.body).length === 0) {
-    return res.status(400).json({ error: "Request body is missing" });
+  if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Request body is missing" });
   }
 
     try {
@@ -94,20 +93,33 @@ export const register = async (req, res) => {
 export const getMe = async (req, res) => {
     try {
         const user = await prisma.user.findUnique({
-            where: { id: req.user.id },
+          where: { id: req.user.id },
         });
 
         if (!user) {
-            return res.status(404).json({ message: 'user not found' });
+          return res.status(404).json({ message: 'user not found' });
         }
 
         const { password: _, ...userWithoutPassword } = user;
-
         res.status(200).json({ user: userWithoutPassword });
 
     } catch (error) {
         console.error('GetMe error:', error);
         res.status(500).json({ message: 'server error retrieving user data' });
     }
-     return res.status(200).json({ message: "Received" });
+};
+
+export const deleteUserById = async (req, res) => {
+  const userId = req.params.userid;
+   try {
+        const deleteUser = await prisma.user.delete({
+          where: {
+           id: userId,
+          },
+        });
+        res.status(204).json(deleteUser);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "An error occurred deleting the user"});
+  }
 };

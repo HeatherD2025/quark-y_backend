@@ -17,13 +17,6 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// DEBUG: log all incoming json bodies
-app.use((req, res, next) => {
-  console.log('Incoming Request Body:', req.body);
-  next();
-});
-
-
 // Routes
 app.use('/api/authorized', authorizedRoutes);
 app.use('/api/comments', commentsRoutes);

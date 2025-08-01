@@ -5,9 +5,9 @@ import { getComments, createComment, updateComment, deleteComment } from '../con
 
 const router = express.Router();
 
-router.get('/articles/:articleUrl/comments', loggedIn, getComments);
-router.post('/articles/:articleUrl/comments', loggedIn, createComment);
-router.put('/articles/:articleUrl/comments/:commentId', loggedIn, updateComment);
+router.get('/articles/:articleUrl/comments', loggedIn, getComments); 
+router.post('/articles/:articleUrl/comments', loggedIn, createComment);  
+router.put('/articles/:articleUrl/comments/:commentId', loggedIn, updateComment); 
 router.delete('/articles/:articleUrl/comments/:commentId', loggedIn, deleteComment);
 
 export default router;
