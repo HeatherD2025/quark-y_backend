@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  username    String    @unique
+  email       String    @unique
+  password    String
+  posts       Post[]
+  comments    Comment[]
+  role        String    @default("user")
+  isAdmin     Boolean   @default(false)
+  dateCreated DateTime  @default(now())
+  dateUpdated DateTime  @updatedAt
+  Token       Token[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String?
+  content     String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  dateCreated DateTime @default(now())
+  dateUpdated DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  articleUrl String  // external article URL
+  createdAt DateTime @default(now())
+  dateUpdated  DateTime @updatedAt
+}
+
+model Item {
+  id         String    @id @default(uuid())
+  articleUrl String    @unique
+  comments   Comment[]
+}
+
+model Token {
+  id           Int      @id @default(autoincrement())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  refreshToken String
+  dateAdded    DateTime @default(now()) @db.Date
+  dateUpdated  DateTime @updatedAt
+}
