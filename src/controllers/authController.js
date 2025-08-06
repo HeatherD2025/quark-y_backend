@@ -4,31 +4,26 @@ import prisma from '../common/prismaClient.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+
 export const login = async (req, res) => {
     const { username, password } = req.body;
-
-    console.log('prisma in authController:', prisma);
 
     try {
         const user = await prisma.user.findUnique({
             where: { username },
         });
-
         if (!user) {
             return res.status(404).json({ message: 'user not found' });
         }
-
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'invalid username or password' });
         }
-
         const token = jwt.sign(
-            { id: user.id, username: user.username },
+            { id: user.id, username: user.username, isAdmin: user.isAdmin },
             JWT_SECRET,
             { expiresIn: '2h' }
         );
-
         const { password: _, ...userWithoutPassword } = user;
 
         res.status(200).json({
@@ -69,12 +64,13 @@ export const register = async (req, res) => {
                 username,
                 email,
                 password: hashedPassword,
+                isAdmin: false,
             },
         });
         console.log('user created')
 
         const token = jwt.sign(
-            { id: newUser.id, username: newUser.username },
+            { id: newUser.id, username: newUser.username, isAdmin: newUser.isAdmin },
             JWT_SECRET,
             { expiresIn: '2h' }
         );
@@ -109,17 +105,32 @@ export const getMe = async (req, res) => {
     }
 };
 
+export const getAllUsers = async (req, res) => {
+    if (!req.user?.isAdmin) {
+        return res.status(403).json({ message: 'admin access only'})
+      }
+    try {
+      const allUsers = await prisma.user.findMany();
+      res.status(200).json(allUsers);
+    } catch (error) {
+      console.error('getAllUsers error', error);
+      res.status(500).json({ message: 'server error retrieving users'})
+    }
+};
+
 export const deleteUserById = async (req, res) => {
+  if (!req.user?.isAdmin) {
+    return res.status(403).json({ message: 'admin access only' })
+  }
+
   const userId = req.params.userid;
    try {
         const deleteUser = await prisma.user.delete({
-          where: {
-           id: userId,
-          },
+          where: { id: userId },
         });
-        res.status(204).json(deleteUser);
+        res.status(200).json(deleteUser);
     } catch (error) {
-      console.error(error);
+      console.error('deleteUserById', error);
       res.status(500).json({ message: "An error occurred deleting the user"});
   }
 };

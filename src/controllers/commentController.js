@@ -4,79 +4,79 @@ import prisma from '../common/prismaClient.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
+export const createComment = async (req, res) => {
+  const articleUrl = decodeURIComponent(req.params.articleUrl);
+  const { content, articleTitle } = req.body;
+  const userId = req.user.id;
 
-export const getComments = async (req, res) => {
-  try {
-    const articleUrl =   decodeURIComponent(req.params.articleUrl);
-
-    const comments = await prisma.comment.findMany({
-      where: { articleUrl },
-      include: { user: true },
-      orderBy: { dateCreated: "desc" },
-    });
-
-    if (!comments || comments.length === 0) {
-      return res.status(404).json({
-        message: "no comments found for this article",
-      });
-    }
-
-    res.status(200).json(comments);
-  } catch (error) {
-    console.error("error fetching comment", error);
-    res.status(500).json({ message: "server error fetching comment" });
+  if (!content || !articleUrl) {
+    return res.status(400).json({ message: 'Content and articleUrl are required.' });
   }
-};
 
-
-export const createComment = async (req, res, next) => {
   try {
-    const { articleUrl } = req.params;
-    const { content } = req.body;
-    const userId = req.user.id;
-
-    const comment = await prisma.comment.create({
-      data: {
-        content,
-        article: { connect: { articleUrl } },
-        user: { connect: { id: userId } },
+    await prisma.item.upsert({
+      where: { articleUrl },
+      update: {}, 
+      create: {
+        articleUrl,
       },
     });
 
-    res.status(201).json(comment);
-  } catch (error) {
-    console.error("error creating comment", error);
-    res.status(500).json({
-      error: "an error occurred while creating the comment",
+    const newComment = await prisma.comment.create({
+      data: {
+        content,
+        articleUrl,
+        userId,
+      },
     });
-    next(error);
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    console.error('Create comment error:', error);
+    res.status(500).json({ message: 'Failed to create comment' });
+  }
+};
+
+export const getCommentsByArticle = async (req, res) => {
+  const articleUrl = decodeURIComponent(req.params.articleUrl);
+
+  if (!articleUrl) {
+    return res.status(400).json({ message: 'Missing articleUrl' });
+  }
+
+  try {
+    const comments = await prisma.comment.findMany({
+      where: { articleUrl },
+      include: { user: { select: { username: true } } },
+      orderBy: { dateCreated: 'desc' },
+    });
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error('getCommentsByArticle error:', error);
+    res.status(500).json({ message: 'Failed to fetch comments' });
   }
 };
 
 
 export const updateComment = async (req, res) => {
   const { commentId } = req.params;
-  const { content, userId } = req.body;
+  const { content } = req.body;
+  const user = req.user;
 
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ message: 'authorization token required' });
-    }
-
-    const token = authHeader.replace('Bearer ', '');
-    const decoded = jwt.verify(token, JWT_SECRET);
-
     const comment = await prisma.comment.findUnique({
       where: { id: commentId },
     });
 
     if (!comment) {
-      return res.status(404).json({ message: 'comment not found' });
+      return res.status(404).json({ message: 'Comment not found' });
     }
-
-    if (comment.userId !== decoded.id) {
-      return res.status(403).json({ message: 'forbidden: cannot edit others comments' });
+    if (comment.userId !== user.id && !user.isAdmin) {
+      return res.status(403).json({ message: 'You are not authorized to edit this comment' });
+    }
+    if (!content?.trim()) {
+      return res.status(400).json({ message: 'Content is required' });
     }
 
     const updatedComment = await prisma.comment.update({
@@ -86,48 +86,35 @@ export const updateComment = async (req, res) => {
 
     res.status(200).json(updatedComment);
   } catch (error) {
-    console.error('error updating comment', error);
-    res.status(500).json({ message: 'server error updating comment' });
+    console.error('Error updating comment:', error);
+    res.status(500).json({ message: 'Server error updating comment' });
   }
 };
 
-
 export const deleteComment = async (req, res) => {
-  const { articleUrl, commentId } = req.params;
+  const { commentId } = req.params;
+  const user = req.user;
 
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ message: "authorization token required" });
-    }
-
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const authenticateUserId = decoded.id;
-
     const comment = await prisma.comment.findUnique({
-        where: { id: commentId }
-    });
-
-    if (!comment) {
-      return res.status(404).json({ message: "comment not found" });
-    }
-
-    if (comment.userId !== authenticateUserId) {
-      return res.status(403).json({ message: "comment does not match the specified article" });
-    }
-
-    const removeComment = await prisma.comment.delete({
       where: { id: commentId },
     });
 
-    res.status(200).json({
-      message: "Comment deleted successfully",
-      comment: removeComment,
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+
+    if (comment.userId !== user.id && !user.isAdmin) {
+      return res.status(403).json({ message: 'You are not authorized to delete this comment' });
+    }
+
+    await prisma.comment.delete({
+      where: { id: commentId },
     });
 
+    res.status(200).json({ message: 'Comment deleted successfully' });
   } catch (error) {
-    console.error("Error removing comment:", error);
-    res.status(500).json({ message: "Server error removing comment" });
+    console.error('Error removing comment:', error);
+    res.status(500).json({ message: 'Server error removing comment' });
   }
 };
