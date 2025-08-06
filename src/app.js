@@ -1,45 +1,49 @@
-import express from 'express';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import cors from 'cors';
-import morgan from 'morgan';
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
 
-import authorizedRoutes from './routes/authorized.js';
-import commentsRoutes from './routes/comments.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
-// Routes
-app.use('/api/authorized', authorizedRoutes);
-app.use('/api/comments', commentsRoutes);
+// // API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/comments', commentRoutes);
 
-// Health check
+// // Health Check
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
 
-// Serve frontend
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client/dist/index.html"));
+// // 404 for unknown API routes
+app.use(/.*/, (req, res) => {
+  res.status(404).json({ error: 'Route not found' });
 });
 
-// Error handler
+// // Generic error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.status || 500).json({ error: err.message || "Internal server error." });
+  console.error('Unhandled error:', err.stack);
+  res.status(err.status || 500).json({ error: err.message || 'Internal server error' });
 });
 
-// 404 fallback
-app.use("/*splat", (req, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
+if (app._router && app._router.stack) {
+  app._router.stack.forEach((layer) => {
+    if (layer.route) {
+      console.log(
+        `${Object.keys(layer.route.methods)[0].toUpperCase()} ${
+          layer.route.path
+        }`
+      );
+    }
+  });
+}
 
 export default app;
