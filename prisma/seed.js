@@ -1,4 +1,4 @@
-import { PrismaClient } from '../generated/prisma/index.js';
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
@@ -12,14 +12,20 @@ async function main() {
   // Check if the article already exists
   const articleUrl = "https://medium.com/starts-with-a-bang/the-universe-requires-quantum-fields-not-just-quantum-particles-eb9e7cff737f";
 
-  const existingItem = await prisma.item.findUnique({
+  const existingItem = await prisma.article.findUnique({
     where: { articleUrl }
   });
 
   if (!existingItem) {
-    await prisma.item.create({
-      data: { articleUrl }
+    await prisma.article.create({
+      data: { 
+        articleUrl,
+        headline: 'placeholder headline',
+        content: 'placeholder content for this article',
+        publishedAt: new Date(),
+      },
     });
+
     console.log("Article seeded.");
   } else {
     console.log("Article already exists, skipping seed.");

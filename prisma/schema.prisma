@@ -26,7 +26,7 @@ model User {
 
 model Post {
   id          Int      @id @default(autoincrement())
-  title       String?
+  title       String
   content     String
   userId      String
   user        User     @relation(fields: [userId], references: [id])
@@ -41,15 +41,18 @@ model Comment {
   articleUrl   String
   articleTitle String?
   user         User     @relation(fields: [userId], references: [id])
-  article      Item     @relation(fields: [articleUrl], references: [articleUrl])
+  article      Article  @relation(fields: [articleUrl], references: [articleUrl])
   dateCreated  DateTime @default(now())
   dateUpdated  DateTime @updatedAt
 }
 
-model Item {
-  id         String    @id @default(uuid())
-  articleUrl String    @unique
-  comments   Comment[]
+model Article {
+  id          String    @id @default(uuid())
+  articleUrl  String    @unique
+  headline    String
+  content     String
+  publishedAt DateTime  @default(now())
+  comments    Comment[]
 }
 
 model Token {

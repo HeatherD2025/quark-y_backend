@@ -1,8 +1,4 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import prisma from '../common/prismaClient.js';
-
-const JWT_SECRET = process.env.JWT_SECRET;
 
 export const createComment = async (req, res) => {
   const articleUrl = decodeURIComponent(req.params.articleUrl);
@@ -14,9 +10,15 @@ export const createComment = async (req, res) => {
   }
 
   try {
-    await prisma.item.upsert({
+    new URL(articleUrl); // Validate URL
+  } catch (e) {
+    return res.status(400).json({ message: 'Invalid article URL.' });
+  }
+
+  try {
+    await prisma.article.upsert({
       where: { articleUrl },
-      update: {}, 
+      update: {},
       create: {
         articleUrl,
       },
@@ -26,6 +28,7 @@ export const createComment = async (req, res) => {
       data: {
         content,
         articleUrl,
+        articleTitle,
         userId,
       },
     });
@@ -58,7 +61,6 @@ export const getCommentsByArticle = async (req, res) => {
   }
 };
 
-
 export const updateComment = async (req, res) => {
   const { commentId } = req.params;
   const { content } = req.body;
@@ -72,9 +74,11 @@ export const updateComment = async (req, res) => {
     if (!comment) {
       return res.status(404).json({ message: 'Comment not found' });
     }
+
     if (comment.userId !== user.id && !user.isAdmin) {
       return res.status(403).json({ message: 'You are not authorized to edit this comment' });
     }
+
     if (!content?.trim()) {
       return res.status(400).json({ message: 'Content is required' });
     }
