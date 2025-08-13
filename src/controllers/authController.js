@@ -12,18 +12,36 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    // debugging area
+
+    console.log('Incoming login request:', req.body);
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ message: 'Username and password are required' });
+    }
+
+    //
+
     const user = await prisma.user.findUnique({
       where: { username },
     });
 
     if (!user) {
+console.warn(`Login failed: user not found for username: ${username}`);
       return res.status(404).json({ message: 'User not found' });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
+console.warn('Login failed: invalid password');
       return res.status(401).json({ message: 'Invalid username or password' });
     }
+
+if (!JWT_SECRET) {
+ console.error('Missing JWT_SECRET in environment variables');
+return res.status(500).json({ message: 'Internal server configuration error' });
+}
 
     const token = jwt.sign(
       { id: user.id, username: user.username, isAdmin: user.isAdmin },
