@@ -8,6 +8,7 @@ export const getMe = async (req, res) => {
         id: true,
         username: true,
         email: true,
+        avatar: true,
         role: true,
         isAdmin: true,
         dateCreated: true,
@@ -77,6 +78,10 @@ export const deleteUserById = async (req, res) => {
 
 export const deleteOwnAccount = async (req, res) => {
   const userId = req.user.id;
+
+  if (!req.user?.loggedIn) {
+    return res.status(403).json({ message: 'Please log in and try again' });
+  }
 
   try {
     const deletedUser = await prisma.user.delete({
