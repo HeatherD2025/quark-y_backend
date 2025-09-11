@@ -7,7 +7,7 @@
     "queries": "ts-node ./src/queries.ts",
     "caching": "ts-node ./src/caching.ts",
     "postinstall": "prisma generate",
-    "start": "node index.js",
+    "start": "node src/index.js",
     "build": "echo 'No build step required'"
   },
   "prisma": {
