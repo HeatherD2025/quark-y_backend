@@ -1,11 +1,11 @@
 {
-  "name": "hello-prisma",
+  "name": "quarky",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "build": "prisma generate"
+    "build": "tsc && prisma generate"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -21,9 +21,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.10",
-    "pg": "^8.16.3"
-  },
-  "devDependencies": {
+    "pg": "^8.16.3",
     "prisma": "^6.14.0",
     "ts-node": "10.9.2",
     "typescript": "5.8.2"
