@@ -1,23 +1,17 @@
 import express from 'express';
 import { loggedIn } from '../middleware/loggedIn.js';
-import { adminOnly } from '../middleware/adminOnly.js';
 import {
   getMe,
-  getAllUsers,
-  deleteUserById,
-  deleteOwnAccount
+  updateAvatar,
+  deleteOwnAccount,
+  removeAvatar
 } from '../controllers/userController.js';
 
 const router = express.Router();
 
-// get current user's data
 router.get('/me', loggedIn, getMe);
-
-// users can delete own account
-router.delete('/me', loggedIn, deleteOwnAccount)
-
-// admin-only access
-router.get('/', loggedIn, adminOnly, getAllUsers);
-router.delete('/:userid', loggedIn, adminOnly, deleteUserById);
+router.put('/me', loggedIn, updateAvatar);
+router.delete('/me', loggedIn, deleteOwnAccount);
+router.delete('/me', loggedIn, removeAvatar)
 
 export default router;

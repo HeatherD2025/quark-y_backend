@@ -1,5 +1,7 @@
 import prisma from '../common/prismaClient.js';
 
+
+// GET USER
 export const getMe = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -27,61 +29,48 @@ export const getMe = async (req, res) => {
   }
 };
 
-export const getAllUsers = async (req, res) => {
-  if (!req.user?.isAdmin) {
-    return res.status(403).json({ message: 'Admin access only' });
-  }
+// UPDATE USER AVATAR
+export const updateAvatar = async (req, res) => {
+  const userId = req.user.id;
+  const { avatar } = req.body;
 
+  if(!avatar || !allowedAvatarIds.includes(avatar)) {
+    return res.status(400).json({ message: "Invalid avatar selected" });
+  }
   try {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        role: true,
-        isAdmin: true,
-        dateCreated: true,
-        dateUpdated: true
-      },
-    });
-
-    res.status(200).json(users);
-  } catch (error) {
-    console.error('getAllUsers error:', error);
-    res.status(500).json({ message: 'Server error retrieving users' });
-  }
-};
-
-export const deleteUserById = async (req, res) => {
-  if (!req.user?.isAdmin) {
-    return res.status(403).json({ message: 'Admin access only' });
-  }
-
-  const userId = req.params.userid;
-
-  try {
-    const deletedUser = await prisma.user.delete({
+    const user = await prisma.user.update({
       where: { id: userId },
+      data: { avatar },
     });
 
-    const { password, ...userWithoutPassword } = deletedUser;
-    res.status(200).json({ message: 'User deleted successfully', user: userWithoutPassword });
-
+  res.status(200).json({message: "Avatar updated successfully"});
   } catch (error) {
-    console.error('deleteUserById error:', error);
-    if (error.code === 'P2025') {
-      return res.status(404).json({ message: 'User not found' });
-    }
-    res.status(500).json({ message: 'Server error deleting user' });
+    console.error("Error in updating avatar", error);
+    res.status(500).json({message: "Internal server error"});
   }
-};
+}
 
-export const deleteOwnAccount = async (req, res) => {
+// DELETE AVATAR
+export const removeAvatar = async (req, res) => {
   const userId = req.user.id;
 
-  if (!req.user?.loggedIn) {
-    return res.status(403).json({ message: 'Please log in and try again' });
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: { avatarId: null },
+    });
+
+    res.status(200).json({ message: 'Avatar removed successfully' });
+  } catch (error) {
+    console.error('Error removing avatar:', error);
+    res.status(500).json({ message: 'Server error removing avatar' });
   }
+};
+
+
+// DELETE ACCOUNT
+export const deleteOwnAccount = async (req, res) => {
+  const userId = req.user.id;
 
   try {
     const deletedUser = await prisma.user.delete({
