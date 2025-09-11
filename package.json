@@ -3,12 +3,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "queries": "ts-node ./src/queries.ts",
-    "caching": "ts-node ./src/caching.ts",
-    "postinstall": "prisma generate",
+    "dev": "nodemon index.js",
     "start": "node index.js",
-    "build": "echo 'No build step required'"
+    "build": "tsc && prisma generate"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
