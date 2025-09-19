@@ -1,5 +1,5 @@
-import express from 'express';
-import { loggedIn } from '../middleware/loggedIn.js';
+import express from "express";
+import { loggedIn } from "../middleware/loggedIn.js";
 
 const router = express.Router();
 const {
@@ -7,11 +7,10 @@ const {
   removeAvatar,
 } = require("../controllers/avatarController.js");
 
-
-router.post('/register', )
+router.post("/register");
 // change avatar
-router.put('/me', loggedIn, setAvatar);
+router.put("/me", loggedIn, setAvatar);
 // delete avatar
-router.put('/me', loggedIn, removeAvatar);
+router.put("/me", loggedIn, removeAvatar);
 
 export default router;

@@ -1,8 +1,7 @@
-// This is your Prisma schema file,
+// prisma/schema.prisma
 
 generator client {
   provider = "prisma-client-js"
-  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -18,7 +17,6 @@ model User {
   avatarId    String?
   posts       Post[]
   comments    Comment[]
-  role        String    @default("user")
   isAdmin     Boolean   @default(false)
   dateCreated DateTime  @default(now())
   dateUpdated DateTime  @updatedAt

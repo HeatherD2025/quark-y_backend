@@ -1,19 +1,21 @@
-import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const loggedIn = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers["authorization"];
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: "you must be logged in to access this resource" });
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res
+      .status(401)
+      .json({ error: "you must be logged in to access this resource" });
   }
 
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
   if (!token) {
-    return res.status(403).json({ error: 'Access token missing from header.' });
+    return res.status(403).json({ error: "Access token missing from header." });
   }
 
   try {
@@ -21,8 +23,8 @@ const loggedIn = (req, res, next) => {
     req.user = decoded;
     next();
   } catch (error) {
-    console.error('Error verifying token', error.message);
-    return res.status(401).json({ error: 'invalid token' });
+    console.error("Error verifying token", error.message);
+    return res.status(401).json({ error: "invalid token" });
   }
 };
 

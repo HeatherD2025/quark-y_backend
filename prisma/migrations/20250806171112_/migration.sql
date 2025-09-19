@@ -1,8 +1,8 @@
 /*
   Warnings:
 
-  - You are about to drop the `Item` table. If the table is not empty, all the data it contains will be lost.
-  - Made the column `title` on table `Post` required. This step will fail if there are existing NULL values in that column.
+  - You are about to drop the "Item" table. If the table is not empty, all the data it contains will be lost.
+  - Made the column "title" on table "Post" required. This step will fail if there are existing NULL values in that column.
 
 */
 -- DropForeignKey

@@ -2,7 +2,7 @@
  * Client
  **/
 
-import * as runtime from "../runtime/library.js";
+import * as runtime from '../runtime/library.js';
 import $Types = runtime.Types; // general types
 import $Public = runtime.Types.Public;
 import $Utils = runtime.Types.Utils;
@@ -53,14 +53,14 @@ export type Token = $Result.DefaultSelection<Prisma.$TokenPayload>;
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  const U = "log" extends keyof ClientOptions
-    ? ClientOptions["log"] extends Array<Prisma.LogLevel | Prisma.LogDefinition>
-      ? Prisma.GetEvents<ClientOptions["log"]>
+  const U = 'log' extends keyof ClientOptions
+    ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition>
+      ? Prisma.GetEvents<ClientOptions['log']>
       : never
     : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
-  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>["other"] };
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] };
 
   /**
    * ##  Prisma Client ʲˢ
@@ -83,7 +83,7 @@ export class PrismaClient<
   $on<V extends U>(
     eventType: V,
     callback: (
-      event: V extends "query" ? Prisma.QueryEvent : Prisma.LogEvent
+      event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent
     ) => void
   ): PrismaClient;
 
@@ -192,7 +192,7 @@ export class PrismaClient<
   ): $Utils.JsPromise<R>;
 
   $extends: $Extensions.ExtendsHook<
-    "extends",
+    'extends',
     Prisma.TypeMapCb<ClientOptions>,
     ExtArgs,
     $Utils.Call<
@@ -453,9 +453,9 @@ export namespace Prisma {
   export type SelectSubset<T, U> = {
     [key in keyof T]: key extends keyof U ? T[key] : never;
   } & (T extends SelectAndInclude
-    ? "Please either choose `select` or `include`."
+    ? 'Please either choose `select` or `include`.'
     : T extends SelectAndOmit
-    ? "Please either choose `select` or `omit`."
+    ? 'Please either choose `select` or `omit`.'
     : {});
 
   /**
@@ -531,7 +531,7 @@ export namespace Prisma {
     [K in keyof O]: O[K] extends undefined ? At<O1, K> : O[K];
   } & {};
 
-  /** Helper Types for "Merge" **/
+  /** Helper Types for 'Merge' **/
   export type IntersectOf<U extends Union> = (
     U extends unknown ? (k: U) => void : never
   ) extends (k: infer I) => void
@@ -599,7 +599,7 @@ export namespace Prisma {
     : never;
 
   export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
-  /** End Helper Types for "Merge" **/
+  /** End Helper Types for 'Merge' **/
 
   export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
 
@@ -662,13 +662,13 @@ export namespace Prisma {
 
   type FieldPaths<
     T,
-    U = Omit<T, "_avg" | "_sum" | "_count" | "_min" | "_max">
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
   > = IsObject<T> extends True ? U : T;
 
   type GetHavingFields<T> = {
     [K in keyof T]: Or<
-      Or<Extends<"OR", K>, Extends<"AND", K>>,
-      Extends<"NOT", K>
+      Or<Extends<'OR', K>, Extends<'AND', K>>,
+      Extends<'NOT', K>
     > extends True
       ? // infer is only needed to not hit TS limit
         // based on the brilliant idea of Pierre-Antoine Mills
@@ -712,11 +712,11 @@ export namespace Prisma {
     : FieldRef<Model, FieldType>;
 
   export const ModelName: {
-    User: "User";
-    Post: "Post";
-    Comment: "Comment";
-    Item: "Item";
-    Token: "Token";
+    User: 'User';
+    Post: 'Post';
+    Comment: 'Comment';
+    Item: 'Item';
+    Token: 'Token';
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName];
@@ -731,7 +731,7 @@ export namespace Prisma {
       $Utils.Record<string, any>
     > {
     returns: Prisma.TypeMap<
-      this["params"]["extArgs"],
+      this['params']['extArgs'],
       ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}
     >;
   }
@@ -744,7 +744,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions;
     };
     meta: {
-      modelProps: "user" | "post" | "comment" | "item" | "token";
+      modelProps: 'user' | 'post' | 'comment' | 'item' | 'token';
       txIsolationLevel: Prisma.TransactionIsolationLevel;
     };
     model: {
@@ -1143,12 +1143,12 @@ export namespace Prisma {
     };
   };
   export const defineExtension: $Extensions.ExtendsHook<
-    "define",
+    'define',
     Prisma.TypeMapCb,
     $Extensions.DefaultArgs
   >;
   export type DefaultPrismaClient = PrismaClient;
-  export type ErrorFormat = "pretty" | "colorless" | "minimal";
+  export type ErrorFormat = 'pretty' | 'colorless' | 'minimal';
   export interface PrismaClientOptions {
     /**
      * Overwrites the datasource url from your schema.prisma file
@@ -1159,7 +1159,7 @@ export namespace Prisma {
      */
     datasourceUrl?: string;
     /**
-     * @default "colorless"
+     * @default 'colorless'
      */
     errorFormat?: ErrorFormat;
     /**
@@ -1222,16 +1222,16 @@ export namespace Prisma {
   };
 
   /* Types for Logging */
-  export type LogLevel = "info" | "query" | "warn" | "error";
+  export type LogLevel = 'info' | 'query' | 'warn' | 'error';
   export type LogDefinition = {
     level: LogLevel;
-    emit: "stdout" | "event";
+    emit: 'stdout' | 'event';
   };
 
   export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
 
   export type GetLogType<T> = CheckIsLogLevel<
-    T extends LogDefinition ? T["level"] : T
+    T extends LogDefinition ? T['level'] : T
   >;
 
   export type GetEvents<T extends any[]> = T extends Array<
@@ -1256,30 +1256,30 @@ export namespace Prisma {
   /* End Types for Logging */
 
   export type PrismaAction =
-    | "findUnique"
-    | "findUniqueOrThrow"
-    | "findMany"
-    | "findFirst"
-    | "findFirstOrThrow"
-    | "create"
-    | "createMany"
-    | "createManyAndReturn"
-    | "update"
-    | "updateMany"
-    | "updateManyAndReturn"
-    | "upsert"
-    | "delete"
-    | "deleteMany"
-    | "executeRaw"
-    | "queryRaw"
-    | "aggregate"
-    | "count"
-    | "runCommandRaw"
-    | "findRaw"
-    | "groupBy";
+    | 'findUnique'
+    | 'findUniqueOrThrow'
+    | 'findMany'
+    | 'findFirst'
+    | 'findFirstOrThrow'
+    | 'create'
+    | 'createMany'
+    | 'createManyAndReturn'
+    | 'update'
+    | 'updateMany'
+    | 'updateManyAndReturn'
+    | 'upsert'
+    | 'delete'
+    | 'deleteMany'
+    | 'executeRaw'
+    | 'queryRaw'
+    | 'aggregate'
+    | 'count'
+    | 'runCommandRaw'
+    | 'findRaw'
+    | 'groupBy';
 
   /**
-   * These options are being passed into the middleware as "params"
+   * These options are being passed into the middleware as 'params'
    */
   export type MiddlewareParams = {
     model?: ModelName;
@@ -1546,7 +1546,7 @@ export namespace Prisma {
   };
 
   export type GetUserAggregateType<T extends UserAggregateArgs> = {
-    [P in keyof T & keyof AggregateUser]: P extends "_count" | "count"
+    [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateUser[P]>
@@ -1585,8 +1585,8 @@ export namespace Prisma {
 
   type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<UserGroupByOutputType, T["by"]> & {
-        [P in keyof T & keyof UserGroupByOutputType]: P extends "_count"
+      PickEnumerable<UserGroupByOutputType, T['by']> & {
+        [P in keyof T & keyof UserGroupByOutputType]: P extends '_count'
           ? T[P] extends boolean
             ? number
             : GetScalarType<T[P], UserGroupByOutputType[P]>
@@ -1612,7 +1612,7 @@ export namespace Prisma {
       Token?: boolean | User$TokenArgs<ExtArgs>;
       _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["user"]
+    ExtArgs['result']['user']
   >;
 
   export type UserSelectCreateManyAndReturn<
@@ -1628,7 +1628,7 @@ export namespace Prisma {
       dateCreated?: boolean;
       dateUpdated?: boolean;
     },
-    ExtArgs["result"]["user"]
+    ExtArgs['result']['user']
   >;
 
   export type UserSelectUpdateManyAndReturn<
@@ -1644,7 +1644,7 @@ export namespace Prisma {
       dateCreated?: boolean;
       dateUpdated?: boolean;
     },
-    ExtArgs["result"]["user"]
+    ExtArgs['result']['user']
   >;
 
   export type UserSelectScalar = {
@@ -1661,15 +1661,15 @@ export namespace Prisma {
   export type UserOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = $Extensions.GetOmit<
-    | "id"
-    | "username"
-    | "email"
-    | "password"
-    | "role"
-    | "isAdmin"
-    | "dateCreated"
-    | "dateUpdated",
-    ExtArgs["result"]["user"]
+    | 'id'
+    | 'username'
+    | 'email'
+    | 'password'
+    | 'role'
+    | 'isAdmin'
+    | 'dateCreated'
+    | 'dateUpdated',
+    ExtArgs['result']['user']
   >;
   export type UserInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
@@ -1689,7 +1689,7 @@ export namespace Prisma {
   export type $UserPayload<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = {
-    name: "User";
+    name: 'User';
     objects: {
       posts: Prisma.$PostPayload<ExtArgs>[];
       comments: Prisma.$CommentPayload<ExtArgs>[];
@@ -1706,7 +1706,7 @@ export namespace Prisma {
         dateCreated: Date;
         dateUpdated: Date;
       },
-      ExtArgs["result"]["user"]
+      ExtArgs['result']['user']
     >;
     composites: {};
   };
@@ -1716,7 +1716,7 @@ export namespace Prisma {
 
   type UserCountArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
-  > = Omit<UserFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+  > = Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: UserCountAggregateInputType | true;
   };
 
@@ -1725,8 +1725,8 @@ export namespace Prisma {
     GlobalOmitOptions = {}
   > {
     [K: symbol]: {
-      types: Prisma.TypeMap<ExtArgs>["model"]["User"];
-      meta: { name: "User" };
+      types: Prisma.TypeMap<ExtArgs>['model']['User'];
+      meta: { name: 'User' };
     };
     /**
      * Find zero or one User that matches the filter.
@@ -1745,7 +1745,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "findUnique",
+        'findUnique',
         GlobalOmitOptions
       > | null,
       null,
@@ -1771,7 +1771,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "findUniqueOrThrow",
+        'findUniqueOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -1798,7 +1798,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "findFirst",
+        'findFirst',
         GlobalOmitOptions
       > | null,
       null,
@@ -1826,7 +1826,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "findFirstOrThrow",
+        'findFirstOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -1856,7 +1856,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "findMany",
+        'findMany',
         GlobalOmitOptions
       >
     >;
@@ -1879,7 +1879,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "create",
+        'create',
         GlobalOmitOptions
       >,
       never,
@@ -1931,7 +1931,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "createManyAndReturn",
+        'createManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -1954,7 +1954,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "delete",
+        'delete',
         GlobalOmitOptions
       >,
       never,
@@ -1983,7 +1983,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "update",
+        'update',
         GlobalOmitOptions
       >,
       never,
@@ -2062,7 +2062,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "updateManyAndReturn",
+        'updateManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -2090,7 +2090,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$UserPayload<ExtArgs>,
         T,
-        "upsert",
+        'upsert',
         GlobalOmitOptions
       >,
       never,
@@ -2114,10 +2114,10 @@ export namespace Prisma {
     count<T extends UserCountArgs>(
       args?: Subset<T, UserCountArgs>
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], UserCountAggregateOutputType>
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
         : number
     >;
 
@@ -2136,11 +2136,11 @@ export namespace Prisma {
      *   },
      *   where: {
      *     email: {
-     *       contains: "prisma.io",
+     *       contains: 'prisma.io',
      *     },
      *   },
      *   orderBy: {
-     *     age: "asc",
+     *     age: 'asc',
      *   },
      *   take: 10,
      * })
@@ -2170,61 +2170,61 @@ export namespace Prisma {
     groupBy<
       T extends UserGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: UserGroupByArgs["orderBy"] }
-        : { orderBy?: UserGroupByArgs["orderBy"] },
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<
-        Keys<MaybeTupleToUnion<T["orderBy"]>>
+        Keys<MaybeTupleToUnion<T['orderBy']>>
       >,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-        ? `Error: "by" must not be empty.`
+        ? `Error: 'by' must not be empty.`
         : HavingValid extends False
         ? {
             [P in HavingFields]: P extends ByFields
               ? never
               : P extends string
-              ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+              ? `Error: Field '${P}' used in 'having' needs to be provided in 'by'.`
               : [
                   Error,
-                  "Field ",
+                  'Field ',
                   P,
-                  ` in "having" needs to be provided in "by"`
+                  ` in 'having' needs to be provided in 'by'`
                 ];
           }[HavingFields]
-        : "take" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+        : 'take' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "take", you also need to provide "orderBy"'
-        : "skip" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+          : 'Error: If you provide 'take', you also need to provide 'orderBy''
+        : 'skip' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "skip", you also need to provide "orderBy"'
+          : 'Error: If you provide 'skip', you also need to provide 'orderBy''
         : ByValid extends True
         ? {}
         : {
             [P in OrderFields]: P extends ByFields
               ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+              : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
           }[OrderFields]
     >(
       args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors
@@ -2238,7 +2238,7 @@ export namespace Prisma {
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for User.
+   * The delegate class that acts as a 'Promise-like' for User.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
@@ -2249,14 +2249,14 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
     GlobalOmitOptions = {}
   > extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise";
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
     posts<T extends User$postsArgs<ExtArgs> = {}>(
       args?: Subset<T, User$postsArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$PostPayload<ExtArgs>,
           T,
-          "findMany",
+          'findMany',
           GlobalOmitOptions
         >
       | Null
@@ -2267,7 +2267,7 @@ export namespace Prisma {
       | $Result.GetResult<
           Prisma.$CommentPayload<ExtArgs>,
           T,
-          "findMany",
+          'findMany',
           GlobalOmitOptions
         >
       | Null
@@ -2278,7 +2278,7 @@ export namespace Prisma {
       | $Result.GetResult<
           Prisma.$TokenPayload<ExtArgs>,
           T,
-          "findMany",
+          'findMany',
           GlobalOmitOptions
         >
       | Null
@@ -2323,14 +2323,14 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
-    readonly id: FieldRef<"User", "String">;
-    readonly username: FieldRef<"User", "String">;
-    readonly email: FieldRef<"User", "String">;
-    readonly password: FieldRef<"User", "String">;
-    readonly role: FieldRef<"User", "String">;
-    readonly isAdmin: FieldRef<"User", "Boolean">;
-    readonly dateCreated: FieldRef<"User", "DateTime">;
-    readonly dateUpdated: FieldRef<"User", "DateTime">;
+    readonly id: FieldRef<'User', 'String'>;
+    readonly username: FieldRef<'User', 'String'>;
+    readonly email: FieldRef<'User', 'String'>;
+    readonly password: FieldRef<'User', 'String'>;
+    readonly role: FieldRef<'User', 'String'>;
+    readonly isAdmin: FieldRef<'User', 'Boolean'>;
+    readonly dateCreated: FieldRef<'User', 'DateTime'>;
+    readonly dateUpdated: FieldRef<'User', 'DateTime'>;
   }
 
   // Custom InputTypes
@@ -2993,7 +2993,7 @@ export namespace Prisma {
   };
 
   export type GetPostAggregateType<T extends PostAggregateArgs> = {
-    [P in keyof T & keyof AggregatePost]: P extends "_count" | "count"
+    [P in keyof T & keyof AggregatePost]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregatePost[P]>
@@ -3034,8 +3034,8 @@ export namespace Prisma {
 
   type GetPostGroupByPayload<T extends PostGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<PostGroupByOutputType, T["by"]> & {
-        [P in keyof T & keyof PostGroupByOutputType]: P extends "_count"
+      PickEnumerable<PostGroupByOutputType, T['by']> & {
+        [P in keyof T & keyof PostGroupByOutputType]: P extends '_count'
           ? T[P] extends boolean
             ? number
             : GetScalarType<T[P], PostGroupByOutputType[P]>
@@ -3056,7 +3056,7 @@ export namespace Prisma {
       dateUpdated?: boolean;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["post"]
+    ExtArgs['result']['post']
   >;
 
   export type PostSelectCreateManyAndReturn<
@@ -3071,7 +3071,7 @@ export namespace Prisma {
       dateUpdated?: boolean;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["post"]
+    ExtArgs['result']['post']
   >;
 
   export type PostSelectUpdateManyAndReturn<
@@ -3086,7 +3086,7 @@ export namespace Prisma {
       dateUpdated?: boolean;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["post"]
+    ExtArgs['result']['post']
   >;
 
   export type PostSelectScalar = {
@@ -3101,8 +3101,8 @@ export namespace Prisma {
   export type PostOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = $Extensions.GetOmit<
-    "id" | "title" | "content" | "userId" | "dateCreated" | "dateUpdated",
-    ExtArgs["result"]["post"]
+    'id' | 'title' | 'content' | 'userId' | 'dateCreated' | 'dateUpdated',
+    ExtArgs['result']['post']
   >;
   export type PostInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
@@ -3123,7 +3123,7 @@ export namespace Prisma {
   export type $PostPayload<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = {
-    name: "Post";
+    name: 'Post';
     objects: {
       user: Prisma.$UserPayload<ExtArgs>;
     };
@@ -3136,7 +3136,7 @@ export namespace Prisma {
         dateCreated: Date;
         dateUpdated: Date;
       },
-      ExtArgs["result"]["post"]
+      ExtArgs['result']['post']
     >;
     composites: {};
   };
@@ -3146,7 +3146,7 @@ export namespace Prisma {
 
   type PostCountArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
-  > = Omit<PostFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+  > = Omit<PostFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: PostCountAggregateInputType | true;
   };
 
@@ -3155,8 +3155,8 @@ export namespace Prisma {
     GlobalOmitOptions = {}
   > {
     [K: symbol]: {
-      types: Prisma.TypeMap<ExtArgs>["model"]["Post"];
-      meta: { name: "Post" };
+      types: Prisma.TypeMap<ExtArgs>['model']['Post'];
+      meta: { name: 'Post' };
     };
     /**
      * Find zero or one Post that matches the filter.
@@ -3175,7 +3175,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "findUnique",
+        'findUnique',
         GlobalOmitOptions
       > | null,
       null,
@@ -3201,7 +3201,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "findUniqueOrThrow",
+        'findUniqueOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -3228,7 +3228,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "findFirst",
+        'findFirst',
         GlobalOmitOptions
       > | null,
       null,
@@ -3256,7 +3256,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "findFirstOrThrow",
+        'findFirstOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -3286,7 +3286,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "findMany",
+        'findMany',
         GlobalOmitOptions
       >
     >;
@@ -3309,7 +3309,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "create",
+        'create',
         GlobalOmitOptions
       >,
       never,
@@ -3361,7 +3361,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "createManyAndReturn",
+        'createManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -3384,7 +3384,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "delete",
+        'delete',
         GlobalOmitOptions
       >,
       never,
@@ -3413,7 +3413,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "update",
+        'update',
         GlobalOmitOptions
       >,
       never,
@@ -3492,7 +3492,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "updateManyAndReturn",
+        'updateManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -3520,7 +3520,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$PostPayload<ExtArgs>,
         T,
-        "upsert",
+        'upsert',
         GlobalOmitOptions
       >,
       never,
@@ -3544,10 +3544,10 @@ export namespace Prisma {
     count<T extends PostCountArgs>(
       args?: Subset<T, PostCountArgs>
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], PostCountAggregateOutputType>
+          : GetScalarType<T['select'], PostCountAggregateOutputType>
         : number
     >;
 
@@ -3566,11 +3566,11 @@ export namespace Prisma {
      *   },
      *   where: {
      *     email: {
-     *       contains: "prisma.io",
+     *       contains: 'prisma.io',
      *     },
      *   },
      *   orderBy: {
-     *     age: "asc",
+     *     age: 'asc',
      *   },
      *   take: 10,
      * })
@@ -3600,61 +3600,61 @@ export namespace Prisma {
     groupBy<
       T extends PostGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PostGroupByArgs["orderBy"] }
-        : { orderBy?: PostGroupByArgs["orderBy"] },
+        ? { orderBy: PostGroupByArgs['orderBy'] }
+        : { orderBy?: PostGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<
-        Keys<MaybeTupleToUnion<T["orderBy"]>>
+        Keys<MaybeTupleToUnion<T['orderBy']>>
       >,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-        ? `Error: "by" must not be empty.`
+        ? `Error: 'by' must not be empty.`
         : HavingValid extends False
         ? {
             [P in HavingFields]: P extends ByFields
               ? never
               : P extends string
-              ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+              ? `Error: Field '${P}' used in 'having' needs to be provided in 'by'.`
               : [
                   Error,
-                  "Field ",
+                  'Field ',
                   P,
-                  ` in "having" needs to be provided in "by"`
+                  ` in 'having' needs to be provided in 'by'`
                 ];
           }[HavingFields]
-        : "take" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+        : 'take' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "take", you also need to provide "orderBy"'
-        : "skip" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+          : 'Error: If you provide 'take', you also need to provide 'orderBy''
+        : 'skip' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "skip", you also need to provide "orderBy"'
+          : 'Error: If you provide 'skip', you also need to provide 'orderBy''
         : ByValid extends True
         ? {}
         : {
             [P in OrderFields]: P extends ByFields
               ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+              : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
           }[OrderFields]
     >(
       args: SubsetIntersection<T, PostGroupByArgs, OrderByArg> & InputErrors
@@ -3668,7 +3668,7 @@ export namespace Prisma {
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Post.
+   * The delegate class that acts as a 'Promise-like' for Post.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
@@ -3679,14 +3679,14 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
     GlobalOmitOptions = {}
   > extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise";
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
     user<T extends UserDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, UserDefaultArgs<ExtArgs>>
     ): Prisma__UserClient<
       | $Result.GetResult<
           Prisma.$UserPayload<ExtArgs>,
           T,
-          "findUniqueOrThrow",
+          'findUniqueOrThrow',
           GlobalOmitOptions
         >
       | Null,
@@ -3734,12 +3734,12 @@ export namespace Prisma {
    * Fields of the Post model
    */
   interface PostFieldRefs {
-    readonly id: FieldRef<"Post", "Int">;
-    readonly title: FieldRef<"Post", "String">;
-    readonly content: FieldRef<"Post", "String">;
-    readonly userId: FieldRef<"Post", "String">;
-    readonly dateCreated: FieldRef<"Post", "DateTime">;
-    readonly dateUpdated: FieldRef<"Post", "DateTime">;
+    readonly id: FieldRef<'Post', 'Int'>;
+    readonly title: FieldRef<'Post', 'String'>;
+    readonly content: FieldRef<'Post', 'String'>;
+    readonly userId: FieldRef<'Post', 'String'>;
+    readonly dateCreated: FieldRef<'Post', 'DateTime'>;
+    readonly dateUpdated: FieldRef<'Post', 'DateTime'>;
   }
 
   // Custom InputTypes
@@ -4308,7 +4308,7 @@ export namespace Prisma {
   };
 
   export type GetCommentAggregateType<T extends CommentAggregateArgs> = {
-    [P in keyof T & keyof AggregateComment]: P extends "_count" | "count"
+    [P in keyof T & keyof AggregateComment]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateComment[P]>
@@ -4347,8 +4347,8 @@ export namespace Prisma {
   type GetCommentGroupByPayload<T extends CommentGroupByArgs> =
     Prisma.PrismaPromise<
       Array<
-        PickEnumerable<CommentGroupByOutputType, T["by"]> & {
-          [P in keyof T & keyof CommentGroupByOutputType]: P extends "_count"
+        PickEnumerable<CommentGroupByOutputType, T['by']> & {
+          [P in keyof T & keyof CommentGroupByOutputType]: P extends '_count'
             ? T[P] extends boolean
               ? number
               : GetScalarType<T[P], CommentGroupByOutputType[P]>
@@ -4371,7 +4371,7 @@ export namespace Prisma {
       user?: boolean | UserDefaultArgs<ExtArgs>;
       article?: boolean | ItemDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["comment"]
+    ExtArgs['result']['comment']
   >;
 
   export type CommentSelectCreateManyAndReturn<
@@ -4388,7 +4388,7 @@ export namespace Prisma {
       user?: boolean | UserDefaultArgs<ExtArgs>;
       article?: boolean | ItemDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["comment"]
+    ExtArgs['result']['comment']
   >;
 
   export type CommentSelectUpdateManyAndReturn<
@@ -4405,7 +4405,7 @@ export namespace Prisma {
       user?: boolean | UserDefaultArgs<ExtArgs>;
       article?: boolean | ItemDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["comment"]
+    ExtArgs['result']['comment']
   >;
 
   export type CommentSelectScalar = {
@@ -4421,14 +4421,14 @@ export namespace Prisma {
   export type CommentOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = $Extensions.GetOmit<
-    | "id"
-    | "content"
-    | "userId"
-    | "articleUrl"
-    | "articleTitle"
-    | "dateCreated"
-    | "dateUpdated",
-    ExtArgs["result"]["comment"]
+    | 'id'
+    | 'content'
+    | 'userId'
+    | 'articleUrl'
+    | 'articleTitle'
+    | 'dateCreated'
+    | 'dateUpdated',
+    ExtArgs['result']['comment']
   >;
   export type CommentInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
@@ -4452,7 +4452,7 @@ export namespace Prisma {
   export type $CommentPayload<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = {
-    name: "Comment";
+    name: 'Comment';
     objects: {
       user: Prisma.$UserPayload<ExtArgs>;
       article: Prisma.$ItemPayload<ExtArgs>;
@@ -4467,7 +4467,7 @@ export namespace Prisma {
         dateCreated: Date;
         dateUpdated: Date;
       },
-      ExtArgs["result"]["comment"]
+      ExtArgs['result']['comment']
     >;
     composites: {};
   };
@@ -4478,7 +4478,7 @@ export namespace Prisma {
 
   type CommentCountArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
-  > = Omit<CommentFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+  > = Omit<CommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: CommentCountAggregateInputType | true;
   };
 
@@ -4487,8 +4487,8 @@ export namespace Prisma {
     GlobalOmitOptions = {}
   > {
     [K: symbol]: {
-      types: Prisma.TypeMap<ExtArgs>["model"]["Comment"];
-      meta: { name: "Comment" };
+      types: Prisma.TypeMap<ExtArgs>['model']['Comment'];
+      meta: { name: 'Comment' };
     };
     /**
      * Find zero or one Comment that matches the filter.
@@ -4507,7 +4507,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "findUnique",
+        'findUnique',
         GlobalOmitOptions
       > | null,
       null,
@@ -4533,7 +4533,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "findUniqueOrThrow",
+        'findUniqueOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -4560,7 +4560,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "findFirst",
+        'findFirst',
         GlobalOmitOptions
       > | null,
       null,
@@ -4588,7 +4588,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "findFirstOrThrow",
+        'findFirstOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -4618,7 +4618,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "findMany",
+        'findMany',
         GlobalOmitOptions
       >
     >;
@@ -4641,7 +4641,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "create",
+        'create',
         GlobalOmitOptions
       >,
       never,
@@ -4693,7 +4693,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "createManyAndReturn",
+        'createManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -4716,7 +4716,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "delete",
+        'delete',
         GlobalOmitOptions
       >,
       never,
@@ -4745,7 +4745,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "update",
+        'update',
         GlobalOmitOptions
       >,
       never,
@@ -4824,7 +4824,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "updateManyAndReturn",
+        'updateManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -4852,7 +4852,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$CommentPayload<ExtArgs>,
         T,
-        "upsert",
+        'upsert',
         GlobalOmitOptions
       >,
       never,
@@ -4876,10 +4876,10 @@ export namespace Prisma {
     count<T extends CommentCountArgs>(
       args?: Subset<T, CommentCountArgs>
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], CommentCountAggregateOutputType>
+          : GetScalarType<T['select'], CommentCountAggregateOutputType>
         : number
     >;
 
@@ -4898,11 +4898,11 @@ export namespace Prisma {
      *   },
      *   where: {
      *     email: {
-     *       contains: "prisma.io",
+     *       contains: 'prisma.io',
      *     },
      *   },
      *   orderBy: {
-     *     age: "asc",
+     *     age: 'asc',
      *   },
      *   take: 10,
      * })
@@ -4932,61 +4932,61 @@ export namespace Prisma {
     groupBy<
       T extends CommentGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: CommentGroupByArgs["orderBy"] }
-        : { orderBy?: CommentGroupByArgs["orderBy"] },
+        ? { orderBy: CommentGroupByArgs['orderBy'] }
+        : { orderBy?: CommentGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<
-        Keys<MaybeTupleToUnion<T["orderBy"]>>
+        Keys<MaybeTupleToUnion<T['orderBy']>>
       >,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-        ? `Error: "by" must not be empty.`
+        ? `Error: 'by' must not be empty.`
         : HavingValid extends False
         ? {
             [P in HavingFields]: P extends ByFields
               ? never
               : P extends string
-              ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+              ? `Error: Field '${P}' used in 'having' needs to be provided in 'by'.`
               : [
                   Error,
-                  "Field ",
+                  'Field ',
                   P,
-                  ` in "having" needs to be provided in "by"`
+                  ` in 'having' needs to be provided in 'by'`
                 ];
           }[HavingFields]
-        : "take" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+        : 'take' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "take", you also need to provide "orderBy"'
-        : "skip" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+          : 'Error: If you provide 'take', you also need to provide 'orderBy''
+        : 'skip' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "skip", you also need to provide "orderBy"'
+          : 'Error: If you provide 'skip', you also need to provide 'orderBy''
         : ByValid extends True
         ? {}
         : {
             [P in OrderFields]: P extends ByFields
               ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+              : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
           }[OrderFields]
     >(
       args: SubsetIntersection<T, CommentGroupByArgs, OrderByArg> & InputErrors
@@ -5000,7 +5000,7 @@ export namespace Prisma {
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Comment.
+   * The delegate class that acts as a 'Promise-like' for Comment.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
@@ -5011,14 +5011,14 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
     GlobalOmitOptions = {}
   > extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise";
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
     user<T extends UserDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, UserDefaultArgs<ExtArgs>>
     ): Prisma__UserClient<
       | $Result.GetResult<
           Prisma.$UserPayload<ExtArgs>,
           T,
-          "findUniqueOrThrow",
+          'findUniqueOrThrow',
           GlobalOmitOptions
         >
       | Null,
@@ -5032,7 +5032,7 @@ export namespace Prisma {
       | $Result.GetResult<
           Prisma.$ItemPayload<ExtArgs>,
           T,
-          "findUniqueOrThrow",
+          'findUniqueOrThrow',
           GlobalOmitOptions
         >
       | Null,
@@ -5080,13 +5080,13 @@ export namespace Prisma {
    * Fields of the Comment model
    */
   interface CommentFieldRefs {
-    readonly id: FieldRef<"Comment", "String">;
-    readonly content: FieldRef<"Comment", "String">;
-    readonly userId: FieldRef<"Comment", "String">;
-    readonly articleUrl: FieldRef<"Comment", "String">;
-    readonly articleTitle: FieldRef<"Comment", "String">;
-    readonly dateCreated: FieldRef<"Comment", "DateTime">;
-    readonly dateUpdated: FieldRef<"Comment", "DateTime">;
+    readonly id: FieldRef<'Comment', 'String'>;
+    readonly content: FieldRef<'Comment', 'String'>;
+    readonly userId: FieldRef<'Comment', 'String'>;
+    readonly articleUrl: FieldRef<'Comment', 'String'>;
+    readonly articleTitle: FieldRef<'Comment', 'String'>;
+    readonly dateCreated: FieldRef<'Comment', 'DateTime'>;
+    readonly dateUpdated: FieldRef<'Comment', 'DateTime'>;
   }
 
   // Custom InputTypes
@@ -5629,7 +5629,7 @@ export namespace Prisma {
   };
 
   export type GetItemAggregateType<T extends ItemAggregateArgs> = {
-    [P in keyof T & keyof AggregateItem]: P extends "_count" | "count"
+    [P in keyof T & keyof AggregateItem]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateItem[P]>
@@ -5662,8 +5662,8 @@ export namespace Prisma {
 
   type GetItemGroupByPayload<T extends ItemGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<ItemGroupByOutputType, T["by"]> & {
-        [P in keyof T & keyof ItemGroupByOutputType]: P extends "_count"
+      PickEnumerable<ItemGroupByOutputType, T['by']> & {
+        [P in keyof T & keyof ItemGroupByOutputType]: P extends '_count'
           ? T[P] extends boolean
             ? number
             : GetScalarType<T[P], ItemGroupByOutputType[P]>
@@ -5681,7 +5681,7 @@ export namespace Prisma {
       comments?: boolean | Item$commentsArgs<ExtArgs>;
       _count?: boolean | ItemCountOutputTypeDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["item"]
+    ExtArgs['result']['item']
   >;
 
   export type ItemSelectCreateManyAndReturn<
@@ -5691,7 +5691,7 @@ export namespace Prisma {
       id?: boolean;
       articleUrl?: boolean;
     },
-    ExtArgs["result"]["item"]
+    ExtArgs['result']['item']
   >;
 
   export type ItemSelectUpdateManyAndReturn<
@@ -5701,7 +5701,7 @@ export namespace Prisma {
       id?: boolean;
       articleUrl?: boolean;
     },
-    ExtArgs["result"]["item"]
+    ExtArgs['result']['item']
   >;
 
   export type ItemSelectScalar = {
@@ -5711,7 +5711,7 @@ export namespace Prisma {
 
   export type ItemOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
-  > = $Extensions.GetOmit<"id" | "articleUrl", ExtArgs["result"]["item"]>;
+  > = $Extensions.GetOmit<'id' | 'articleUrl', ExtArgs['result']['item']>;
   export type ItemInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = {
@@ -5728,7 +5728,7 @@ export namespace Prisma {
   export type $ItemPayload<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = {
-    name: "Item";
+    name: 'Item';
     objects: {
       comments: Prisma.$CommentPayload<ExtArgs>[];
     };
@@ -5737,7 +5737,7 @@ export namespace Prisma {
         id: string;
         articleUrl: string;
       },
-      ExtArgs["result"]["item"]
+      ExtArgs['result']['item']
     >;
     composites: {};
   };
@@ -5747,7 +5747,7 @@ export namespace Prisma {
 
   type ItemCountArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
-  > = Omit<ItemFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+  > = Omit<ItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: ItemCountAggregateInputType | true;
   };
 
@@ -5756,8 +5756,8 @@ export namespace Prisma {
     GlobalOmitOptions = {}
   > {
     [K: symbol]: {
-      types: Prisma.TypeMap<ExtArgs>["model"]["Item"];
-      meta: { name: "Item" };
+      types: Prisma.TypeMap<ExtArgs>['model']['Item'];
+      meta: { name: 'Item' };
     };
     /**
      * Find zero or one Item that matches the filter.
@@ -5776,7 +5776,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "findUnique",
+        'findUnique',
         GlobalOmitOptions
       > | null,
       null,
@@ -5802,7 +5802,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "findUniqueOrThrow",
+        'findUniqueOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -5829,7 +5829,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "findFirst",
+        'findFirst',
         GlobalOmitOptions
       > | null,
       null,
@@ -5857,7 +5857,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "findFirstOrThrow",
+        'findFirstOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -5887,7 +5887,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "findMany",
+        'findMany',
         GlobalOmitOptions
       >
     >;
@@ -5910,7 +5910,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "create",
+        'create',
         GlobalOmitOptions
       >,
       never,
@@ -5962,7 +5962,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "createManyAndReturn",
+        'createManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -5985,7 +5985,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "delete",
+        'delete',
         GlobalOmitOptions
       >,
       never,
@@ -6014,7 +6014,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "update",
+        'update',
         GlobalOmitOptions
       >,
       never,
@@ -6093,7 +6093,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "updateManyAndReturn",
+        'updateManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -6121,7 +6121,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$ItemPayload<ExtArgs>,
         T,
-        "upsert",
+        'upsert',
         GlobalOmitOptions
       >,
       never,
@@ -6145,10 +6145,10 @@ export namespace Prisma {
     count<T extends ItemCountArgs>(
       args?: Subset<T, ItemCountArgs>
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], ItemCountAggregateOutputType>
+          : GetScalarType<T['select'], ItemCountAggregateOutputType>
         : number
     >;
 
@@ -6167,11 +6167,11 @@ export namespace Prisma {
      *   },
      *   where: {
      *     email: {
-     *       contains: "prisma.io",
+     *       contains: 'prisma.io',
      *     },
      *   },
      *   orderBy: {
-     *     age: "asc",
+     *     age: 'asc',
      *   },
      *   take: 10,
      * })
@@ -6201,61 +6201,61 @@ export namespace Prisma {
     groupBy<
       T extends ItemGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: ItemGroupByArgs["orderBy"] }
-        : { orderBy?: ItemGroupByArgs["orderBy"] },
+        ? { orderBy: ItemGroupByArgs['orderBy'] }
+        : { orderBy?: ItemGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<
-        Keys<MaybeTupleToUnion<T["orderBy"]>>
+        Keys<MaybeTupleToUnion<T['orderBy']>>
       >,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-        ? `Error: "by" must not be empty.`
+        ? `Error: 'by' must not be empty.`
         : HavingValid extends False
         ? {
             [P in HavingFields]: P extends ByFields
               ? never
               : P extends string
-              ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+              ? `Error: Field '${P}' used in 'having' needs to be provided in 'by'.`
               : [
                   Error,
-                  "Field ",
+                  'Field ',
                   P,
-                  ` in "having" needs to be provided in "by"`
+                  ` in 'having' needs to be provided in 'by'`
                 ];
           }[HavingFields]
-        : "take" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+        : 'take' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "take", you also need to provide "orderBy"'
-        : "skip" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+          : 'Error: If you provide 'take', you also need to provide 'orderBy''
+        : 'skip' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "skip", you also need to provide "orderBy"'
+          : 'Error: If you provide 'skip', you also need to provide 'orderBy''
         : ByValid extends True
         ? {}
         : {
             [P in OrderFields]: P extends ByFields
               ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+              : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
           }[OrderFields]
     >(
       args: SubsetIntersection<T, ItemGroupByArgs, OrderByArg> & InputErrors
@@ -6269,7 +6269,7 @@ export namespace Prisma {
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Item.
+   * The delegate class that acts as a 'Promise-like' for Item.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
@@ -6280,14 +6280,14 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
     GlobalOmitOptions = {}
   > extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise";
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
     comments<T extends Item$commentsArgs<ExtArgs> = {}>(
       args?: Subset<T, Item$commentsArgs<ExtArgs>>
     ): Prisma.PrismaPromise<
       | $Result.GetResult<
           Prisma.$CommentPayload<ExtArgs>,
           T,
-          "findMany",
+          'findMany',
           GlobalOmitOptions
         >
       | Null
@@ -6332,8 +6332,8 @@ export namespace Prisma {
    * Fields of the Item model
    */
   interface ItemFieldRefs {
-    readonly id: FieldRef<"Item", "String">;
-    readonly articleUrl: FieldRef<"Item", "String">;
+    readonly id: FieldRef<'Item', 'String'>;
+    readonly articleUrl: FieldRef<'Item', 'String'>;
   }
 
   // Custom InputTypes
@@ -6938,7 +6938,7 @@ export namespace Prisma {
   };
 
   export type GetTokenAggregateType<T extends TokenAggregateArgs> = {
-    [P in keyof T & keyof AggregateToken]: P extends "_count" | "count"
+    [P in keyof T & keyof AggregateToken]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
         : GetScalarType<T[P], AggregateToken[P]>
@@ -6979,8 +6979,8 @@ export namespace Prisma {
   type GetTokenGroupByPayload<T extends TokenGroupByArgs> =
     Prisma.PrismaPromise<
       Array<
-        PickEnumerable<TokenGroupByOutputType, T["by"]> & {
-          [P in keyof T & keyof TokenGroupByOutputType]: P extends "_count"
+        PickEnumerable<TokenGroupByOutputType, T['by']> & {
+          [P in keyof T & keyof TokenGroupByOutputType]: P extends '_count'
             ? T[P] extends boolean
               ? number
               : GetScalarType<T[P], TokenGroupByOutputType[P]>
@@ -7000,7 +7000,7 @@ export namespace Prisma {
       dateUpdated?: boolean;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["token"]
+    ExtArgs['result']['token']
   >;
 
   export type TokenSelectCreateManyAndReturn<
@@ -7014,7 +7014,7 @@ export namespace Prisma {
       dateUpdated?: boolean;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["token"]
+    ExtArgs['result']['token']
   >;
 
   export type TokenSelectUpdateManyAndReturn<
@@ -7028,7 +7028,7 @@ export namespace Prisma {
       dateUpdated?: boolean;
       user?: boolean | UserDefaultArgs<ExtArgs>;
     },
-    ExtArgs["result"]["token"]
+    ExtArgs['result']['token']
   >;
 
   export type TokenSelectScalar = {
@@ -7042,8 +7042,8 @@ export namespace Prisma {
   export type TokenOmit<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = $Extensions.GetOmit<
-    "id" | "userId" | "refreshToken" | "dateAdded" | "dateUpdated",
-    ExtArgs["result"]["token"]
+    'id' | 'userId' | 'refreshToken' | 'dateAdded' | 'dateUpdated',
+    ExtArgs['result']['token']
   >;
   export type TokenInclude<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
@@ -7064,7 +7064,7 @@ export namespace Prisma {
   export type $TokenPayload<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
   > = {
-    name: "Token";
+    name: 'Token';
     objects: {
       user: Prisma.$UserPayload<ExtArgs>;
     };
@@ -7076,7 +7076,7 @@ export namespace Prisma {
         dateAdded: Date;
         dateUpdated: Date;
       },
-      ExtArgs["result"]["token"]
+      ExtArgs['result']['token']
     >;
     composites: {};
   };
@@ -7087,7 +7087,7 @@ export namespace Prisma {
 
   type TokenCountArgs<
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
-  > = Omit<TokenFindManyArgs, "select" | "include" | "distinct" | "omit"> & {
+  > = Omit<TokenFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
     select?: TokenCountAggregateInputType | true;
   };
 
@@ -7096,8 +7096,8 @@ export namespace Prisma {
     GlobalOmitOptions = {}
   > {
     [K: symbol]: {
-      types: Prisma.TypeMap<ExtArgs>["model"]["Token"];
-      meta: { name: "Token" };
+      types: Prisma.TypeMap<ExtArgs>['model']['Token'];
+      meta: { name: 'Token' };
     };
     /**
      * Find zero or one Token that matches the filter.
@@ -7116,7 +7116,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "findUnique",
+        'findUnique',
         GlobalOmitOptions
       > | null,
       null,
@@ -7142,7 +7142,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "findUniqueOrThrow",
+        'findUniqueOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -7169,7 +7169,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "findFirst",
+        'findFirst',
         GlobalOmitOptions
       > | null,
       null,
@@ -7197,7 +7197,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "findFirstOrThrow",
+        'findFirstOrThrow',
         GlobalOmitOptions
       >,
       never,
@@ -7227,7 +7227,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "findMany",
+        'findMany',
         GlobalOmitOptions
       >
     >;
@@ -7250,7 +7250,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "create",
+        'create',
         GlobalOmitOptions
       >,
       never,
@@ -7302,7 +7302,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "createManyAndReturn",
+        'createManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -7325,7 +7325,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "delete",
+        'delete',
         GlobalOmitOptions
       >,
       never,
@@ -7354,7 +7354,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "update",
+        'update',
         GlobalOmitOptions
       >,
       never,
@@ -7433,7 +7433,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "updateManyAndReturn",
+        'updateManyAndReturn',
         GlobalOmitOptions
       >
     >;
@@ -7461,7 +7461,7 @@ export namespace Prisma {
       $Result.GetResult<
         Prisma.$TokenPayload<ExtArgs>,
         T,
-        "upsert",
+        'upsert',
         GlobalOmitOptions
       >,
       never,
@@ -7485,10 +7485,10 @@ export namespace Prisma {
     count<T extends TokenCountArgs>(
       args?: Subset<T, TokenCountArgs>
     ): Prisma.PrismaPromise<
-      T extends $Utils.Record<"select", any>
-        ? T["select"] extends true
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
           ? number
-          : GetScalarType<T["select"], TokenCountAggregateOutputType>
+          : GetScalarType<T['select'], TokenCountAggregateOutputType>
         : number
     >;
 
@@ -7507,11 +7507,11 @@ export namespace Prisma {
      *   },
      *   where: {
      *     email: {
-     *       contains: "prisma.io",
+     *       contains: 'prisma.io',
      *     },
      *   },
      *   orderBy: {
-     *     age: "asc",
+     *     age: 'asc',
      *   },
      *   take: 10,
      * })
@@ -7541,61 +7541,61 @@ export namespace Prisma {
     groupBy<
       T extends TokenGroupByArgs,
       HasSelectOrTake extends Or<
-        Extends<"skip", Keys<T>>,
-        Extends<"take", Keys<T>>
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TokenGroupByArgs["orderBy"] }
-        : { orderBy?: TokenGroupByArgs["orderBy"] },
+        ? { orderBy: TokenGroupByArgs['orderBy'] }
+        : { orderBy?: TokenGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<
-        Keys<MaybeTupleToUnion<T["orderBy"]>>
+        Keys<MaybeTupleToUnion<T['orderBy']>>
       >,
-      ByFields extends MaybeTupleToUnion<T["by"]>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T["having"]>,
+      HavingFields extends GetHavingFields<T['having']>,
       HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T["by"] extends never[] ? True : False,
+      ByEmpty extends T['by'] extends never[] ? True : False,
       InputErrors extends ByEmpty extends True
-        ? `Error: "by" must not be empty.`
+        ? `Error: 'by' must not be empty.`
         : HavingValid extends False
         ? {
             [P in HavingFields]: P extends ByFields
               ? never
               : P extends string
-              ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+              ? `Error: Field '${P}' used in 'having' needs to be provided in 'by'.`
               : [
                   Error,
-                  "Field ",
+                  'Field ',
                   P,
-                  ` in "having" needs to be provided in "by"`
+                  ` in 'having' needs to be provided in 'by'`
                 ];
           }[HavingFields]
-        : "take" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+        : 'take' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "take", you also need to provide "orderBy"'
-        : "skip" extends Keys<T>
-        ? "orderBy" extends Keys<T>
+          : 'Error: If you provide 'take', you also need to provide 'orderBy''
+        : 'skip' extends Keys<T>
+        ? 'orderBy' extends Keys<T>
           ? ByValid extends True
             ? {}
             : {
                 [P in OrderFields]: P extends ByFields
                   ? never
-                  : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+                  : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
               }[OrderFields]
-          : 'Error: If you provide "skip", you also need to provide "orderBy"'
+          : 'Error: If you provide 'skip', you also need to provide 'orderBy''
         : ByValid extends True
         ? {}
         : {
             [P in OrderFields]: P extends ByFields
               ? never
-              : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`;
+              : `Error: Field '${P}' in 'orderBy' needs to be provided in 'by'`;
           }[OrderFields]
     >(
       args: SubsetIntersection<T, TokenGroupByArgs, OrderByArg> & InputErrors
@@ -7609,7 +7609,7 @@ export namespace Prisma {
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for Token.
+   * The delegate class that acts as a 'Promise-like' for Token.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
@@ -7620,14 +7620,14 @@ export namespace Prisma {
     ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs,
     GlobalOmitOptions = {}
   > extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise";
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
     user<T extends UserDefaultArgs<ExtArgs> = {}>(
       args?: Subset<T, UserDefaultArgs<ExtArgs>>
     ): Prisma__UserClient<
       | $Result.GetResult<
           Prisma.$UserPayload<ExtArgs>,
           T,
-          "findUniqueOrThrow",
+          'findUniqueOrThrow',
           GlobalOmitOptions
         >
       | Null,
@@ -7675,11 +7675,11 @@ export namespace Prisma {
    * Fields of the Token model
    */
   interface TokenFieldRefs {
-    readonly id: FieldRef<"Token", "Int">;
-    readonly userId: FieldRef<"Token", "String">;
-    readonly refreshToken: FieldRef<"Token", "String">;
-    readonly dateAdded: FieldRef<"Token", "DateTime">;
-    readonly dateUpdated: FieldRef<"Token", "DateTime">;
+    readonly id: FieldRef<'Token', 'Int'>;
+    readonly userId: FieldRef<'Token', 'String'>;
+    readonly refreshToken: FieldRef<'Token', 'String'>;
+    readonly dateAdded: FieldRef<'Token', 'DateTime'>;
+    readonly dateUpdated: FieldRef<'Token', 'DateTime'>;
   }
 
   // Custom InputTypes
@@ -8127,90 +8127,90 @@ export namespace Prisma {
    */
 
   export const TransactionIsolationLevel: {
-    ReadUncommitted: "ReadUncommitted";
-    ReadCommitted: "ReadCommitted";
-    RepeatableRead: "RepeatableRead";
-    Serializable: "Serializable";
+    ReadUncommitted: 'ReadUncommitted';
+    ReadCommitted: 'ReadCommitted';
+    RepeatableRead: 'RepeatableRead';
+    Serializable: 'Serializable';
   };
 
   export type TransactionIsolationLevel =
     (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel];
 
   export const UserScalarFieldEnum: {
-    id: "id";
-    username: "username";
-    email: "email";
-    password: "password";
-    role: "role";
-    isAdmin: "isAdmin";
-    dateCreated: "dateCreated";
-    dateUpdated: "dateUpdated";
+    id: 'id';
+    username: 'username';
+    email: 'email';
+    password: 'password';
+    role: 'role';
+    isAdmin: 'isAdmin';
+    dateCreated: 'dateCreated';
+    dateUpdated: 'dateUpdated';
   };
 
   export type UserScalarFieldEnum =
     (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
 
   export const PostScalarFieldEnum: {
-    id: "id";
-    title: "title";
-    content: "content";
-    userId: "userId";
-    dateCreated: "dateCreated";
-    dateUpdated: "dateUpdated";
+    id: 'id';
+    title: 'title';
+    content: 'content';
+    userId: 'userId';
+    dateCreated: 'dateCreated';
+    dateUpdated: 'dateUpdated';
   };
 
   export type PostScalarFieldEnum =
     (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum];
 
   export const CommentScalarFieldEnum: {
-    id: "id";
-    content: "content";
-    userId: "userId";
-    articleUrl: "articleUrl";
-    articleTitle: "articleTitle";
-    dateCreated: "dateCreated";
-    dateUpdated: "dateUpdated";
+    id: 'id';
+    content: 'content';
+    userId: 'userId';
+    articleUrl: 'articleUrl';
+    articleTitle: 'articleTitle';
+    dateCreated: 'dateCreated';
+    dateUpdated: 'dateUpdated';
   };
 
   export type CommentScalarFieldEnum =
     (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum];
 
   export const ItemScalarFieldEnum: {
-    id: "id";
-    articleUrl: "articleUrl";
+    id: 'id';
+    articleUrl: 'articleUrl';
   };
 
   export type ItemScalarFieldEnum =
     (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum];
 
   export const TokenScalarFieldEnum: {
-    id: "id";
-    userId: "userId";
-    refreshToken: "refreshToken";
-    dateAdded: "dateAdded";
-    dateUpdated: "dateUpdated";
+    id: 'id';
+    userId: 'userId';
+    refreshToken: 'refreshToken';
+    dateAdded: 'dateAdded';
+    dateUpdated: 'dateUpdated';
   };
 
   export type TokenScalarFieldEnum =
     (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum];
 
   export const SortOrder: {
-    asc: "asc";
-    desc: "desc";
+    asc: 'asc';
+    desc: 'desc';
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 
   export const QueryMode: {
-    default: "default";
-    insensitive: "insensitive";
+    default: 'default';
+    insensitive: 'insensitive';
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
 
   export const NullsOrder: {
-    first: "first";
-    last: "last";
+    first: 'first';
+    last: 'last';
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
@@ -8224,7 +8224,7 @@ export namespace Prisma {
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "String"
+    'String'
   >;
 
   /**
@@ -8232,7 +8232,7 @@ export namespace Prisma {
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "String[]"
+    'String[]'
   >;
 
   /**
@@ -8240,7 +8240,7 @@ export namespace Prisma {
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "Boolean"
+    'Boolean'
   >;
 
   /**
@@ -8248,7 +8248,7 @@ export namespace Prisma {
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "DateTime"
+    'DateTime'
   >;
 
   /**
@@ -8256,7 +8256,7 @@ export namespace Prisma {
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "DateTime[]"
+    'DateTime[]'
   >;
 
   /**
@@ -8264,7 +8264,7 @@ export namespace Prisma {
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "Int"
+    'Int'
   >;
 
   /**
@@ -8272,7 +8272,7 @@ export namespace Prisma {
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "Int[]"
+    'Int[]'
   >;
 
   /**
@@ -8280,7 +8280,7 @@ export namespace Prisma {
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "Float"
+    'Float'
   >;
 
   /**
@@ -8288,7 +8288,7 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<
     $PrismaModel,
-    "Float[]"
+    'Float[]'
   >;
 
   /**
@@ -8299,14 +8299,14 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[];
     OR?: UserWhereInput[];
     NOT?: UserWhereInput | UserWhereInput[];
-    id?: StringFilter<"User"> | string;
-    username?: StringFilter<"User"> | string;
-    email?: StringFilter<"User"> | string;
-    password?: StringFilter<"User"> | string;
-    role?: StringFilter<"User"> | string;
-    isAdmin?: BoolFilter<"User"> | boolean;
-    dateCreated?: DateTimeFilter<"User"> | Date | string;
-    dateUpdated?: DateTimeFilter<"User"> | Date | string;
+    id?: StringFilter<'User'> | string;
+    username?: StringFilter<'User'> | string;
+    email?: StringFilter<'User'> | string;
+    password?: StringFilter<'User'> | string;
+    role?: StringFilter<'User'> | string;
+    isAdmin?: BoolFilter<'User'> | boolean;
+    dateCreated?: DateTimeFilter<'User'> | Date | string;
+    dateUpdated?: DateTimeFilter<'User'> | Date | string;
     posts?: PostListRelationFilter;
     comments?: CommentListRelationFilter;
     Token?: TokenListRelationFilter;
@@ -8334,16 +8334,16 @@ export namespace Prisma {
       AND?: UserWhereInput | UserWhereInput[];
       OR?: UserWhereInput[];
       NOT?: UserWhereInput | UserWhereInput[];
-      password?: StringFilter<"User"> | string;
-      role?: StringFilter<"User"> | string;
-      isAdmin?: BoolFilter<"User"> | boolean;
-      dateCreated?: DateTimeFilter<"User"> | Date | string;
-      dateUpdated?: DateTimeFilter<"User"> | Date | string;
+      password?: StringFilter<'User'> | string;
+      role?: StringFilter<'User'> | string;
+      isAdmin?: BoolFilter<'User'> | boolean;
+      dateCreated?: DateTimeFilter<'User'> | Date | string;
+      dateUpdated?: DateTimeFilter<'User'> | Date | string;
       posts?: PostListRelationFilter;
       comments?: CommentListRelationFilter;
       Token?: TokenListRelationFilter;
     },
-    "id" | "username" | "email"
+    'id' | 'username' | 'email'
   >;
 
   export type UserOrderByWithAggregationInput = {
@@ -8368,26 +8368,26 @@ export namespace Prisma {
     NOT?:
       | UserScalarWhereWithAggregatesInput
       | UserScalarWhereWithAggregatesInput[];
-    id?: StringWithAggregatesFilter<"User"> | string;
-    username?: StringWithAggregatesFilter<"User"> | string;
-    email?: StringWithAggregatesFilter<"User"> | string;
-    password?: StringWithAggregatesFilter<"User"> | string;
-    role?: StringWithAggregatesFilter<"User"> | string;
-    isAdmin?: BoolWithAggregatesFilter<"User"> | boolean;
-    dateCreated?: DateTimeWithAggregatesFilter<"User"> | Date | string;
-    dateUpdated?: DateTimeWithAggregatesFilter<"User"> | Date | string;
+    id?: StringWithAggregatesFilter<'User'> | string;
+    username?: StringWithAggregatesFilter<'User'> | string;
+    email?: StringWithAggregatesFilter<'User'> | string;
+    password?: StringWithAggregatesFilter<'User'> | string;
+    role?: StringWithAggregatesFilter<'User'> | string;
+    isAdmin?: BoolWithAggregatesFilter<'User'> | boolean;
+    dateCreated?: DateTimeWithAggregatesFilter<'User'> | Date | string;
+    dateUpdated?: DateTimeWithAggregatesFilter<'User'> | Date | string;
   };
 
   export type PostWhereInput = {
     AND?: PostWhereInput | PostWhereInput[];
     OR?: PostWhereInput[];
     NOT?: PostWhereInput | PostWhereInput[];
-    id?: IntFilter<"Post"> | number;
-    title?: StringNullableFilter<"Post"> | string | null;
-    content?: StringFilter<"Post"> | string;
-    userId?: StringFilter<"Post"> | string;
-    dateCreated?: DateTimeFilter<"Post"> | Date | string;
-    dateUpdated?: DateTimeFilter<"Post"> | Date | string;
+    id?: IntFilter<'Post'> | number;
+    title?: StringNullableFilter<'Post'> | string | null;
+    content?: StringFilter<'Post'> | string;
+    userId?: StringFilter<'Post'> | string;
+    dateCreated?: DateTimeFilter<'Post'> | Date | string;
+    dateUpdated?: DateTimeFilter<'Post'> | Date | string;
     user?: XOR<UserScalarRelationFilter, UserWhereInput>;
   };
 
@@ -8407,14 +8407,14 @@ export namespace Prisma {
       AND?: PostWhereInput | PostWhereInput[];
       OR?: PostWhereInput[];
       NOT?: PostWhereInput | PostWhereInput[];
-      title?: StringNullableFilter<"Post"> | string | null;
-      content?: StringFilter<"Post"> | string;
-      userId?: StringFilter<"Post"> | string;
-      dateCreated?: DateTimeFilter<"Post"> | Date | string;
-      dateUpdated?: DateTimeFilter<"Post"> | Date | string;
+      title?: StringNullableFilter<'Post'> | string | null;
+      content?: StringFilter<'Post'> | string;
+      userId?: StringFilter<'Post'> | string;
+      dateCreated?: DateTimeFilter<'Post'> | Date | string;
+      dateUpdated?: DateTimeFilter<'Post'> | Date | string;
       user?: XOR<UserScalarRelationFilter, UserWhereInput>;
     },
-    "id"
+    'id'
   >;
 
   export type PostOrderByWithAggregationInput = {
@@ -8439,25 +8439,25 @@ export namespace Prisma {
     NOT?:
       | PostScalarWhereWithAggregatesInput
       | PostScalarWhereWithAggregatesInput[];
-    id?: IntWithAggregatesFilter<"Post"> | number;
-    title?: StringNullableWithAggregatesFilter<"Post"> | string | null;
-    content?: StringWithAggregatesFilter<"Post"> | string;
-    userId?: StringWithAggregatesFilter<"Post"> | string;
-    dateCreated?: DateTimeWithAggregatesFilter<"Post"> | Date | string;
-    dateUpdated?: DateTimeWithAggregatesFilter<"Post"> | Date | string;
+    id?: IntWithAggregatesFilter<'Post'> | number;
+    title?: StringNullableWithAggregatesFilter<'Post'> | string | null;
+    content?: StringWithAggregatesFilter<'Post'> | string;
+    userId?: StringWithAggregatesFilter<'Post'> | string;
+    dateCreated?: DateTimeWithAggregatesFilter<'Post'> | Date | string;
+    dateUpdated?: DateTimeWithAggregatesFilter<'Post'> | Date | string;
   };
 
   export type CommentWhereInput = {
     AND?: CommentWhereInput | CommentWhereInput[];
     OR?: CommentWhereInput[];
     NOT?: CommentWhereInput | CommentWhereInput[];
-    id?: StringFilter<"Comment"> | string;
-    content?: StringFilter<"Comment"> | string;
-    userId?: StringFilter<"Comment"> | string;
-    articleUrl?: StringFilter<"Comment"> | string;
-    articleTitle?: StringNullableFilter<"Comment"> | string | null;
-    dateCreated?: DateTimeFilter<"Comment"> | Date | string;
-    dateUpdated?: DateTimeFilter<"Comment"> | Date | string;
+    id?: StringFilter<'Comment'> | string;
+    content?: StringFilter<'Comment'> | string;
+    userId?: StringFilter<'Comment'> | string;
+    articleUrl?: StringFilter<'Comment'> | string;
+    articleTitle?: StringNullableFilter<'Comment'> | string | null;
+    dateCreated?: DateTimeFilter<'Comment'> | Date | string;
+    dateUpdated?: DateTimeFilter<'Comment'> | Date | string;
     user?: XOR<UserScalarRelationFilter, UserWhereInput>;
     article?: XOR<ItemScalarRelationFilter, ItemWhereInput>;
   };
@@ -8480,16 +8480,16 @@ export namespace Prisma {
       AND?: CommentWhereInput | CommentWhereInput[];
       OR?: CommentWhereInput[];
       NOT?: CommentWhereInput | CommentWhereInput[];
-      content?: StringFilter<"Comment"> | string;
-      userId?: StringFilter<"Comment"> | string;
-      articleUrl?: StringFilter<"Comment"> | string;
-      articleTitle?: StringNullableFilter<"Comment"> | string | null;
-      dateCreated?: DateTimeFilter<"Comment"> | Date | string;
-      dateUpdated?: DateTimeFilter<"Comment"> | Date | string;
+      content?: StringFilter<'Comment'> | string;
+      userId?: StringFilter<'Comment'> | string;
+      articleUrl?: StringFilter<'Comment'> | string;
+      articleTitle?: StringNullableFilter<'Comment'> | string | null;
+      dateCreated?: DateTimeFilter<'Comment'> | Date | string;
+      dateUpdated?: DateTimeFilter<'Comment'> | Date | string;
       user?: XOR<UserScalarRelationFilter, UserWhereInput>;
       article?: XOR<ItemScalarRelationFilter, ItemWhereInput>;
     },
-    "id"
+    'id'
   >;
 
   export type CommentOrderByWithAggregationInput = {
@@ -8513,24 +8513,24 @@ export namespace Prisma {
     NOT?:
       | CommentScalarWhereWithAggregatesInput
       | CommentScalarWhereWithAggregatesInput[];
-    id?: StringWithAggregatesFilter<"Comment"> | string;
-    content?: StringWithAggregatesFilter<"Comment"> | string;
-    userId?: StringWithAggregatesFilter<"Comment"> | string;
-    articleUrl?: StringWithAggregatesFilter<"Comment"> | string;
+    id?: StringWithAggregatesFilter<'Comment'> | string;
+    content?: StringWithAggregatesFilter<'Comment'> | string;
+    userId?: StringWithAggregatesFilter<'Comment'> | string;
+    articleUrl?: StringWithAggregatesFilter<'Comment'> | string;
     articleTitle?:
-      | StringNullableWithAggregatesFilter<"Comment">
+      | StringNullableWithAggregatesFilter<'Comment'>
       | string
       | null;
-    dateCreated?: DateTimeWithAggregatesFilter<"Comment"> | Date | string;
-    dateUpdated?: DateTimeWithAggregatesFilter<"Comment"> | Date | string;
+    dateCreated?: DateTimeWithAggregatesFilter<'Comment'> | Date | string;
+    dateUpdated?: DateTimeWithAggregatesFilter<'Comment'> | Date | string;
   };
 
   export type ItemWhereInput = {
     AND?: ItemWhereInput | ItemWhereInput[];
     OR?: ItemWhereInput[];
     NOT?: ItemWhereInput | ItemWhereInput[];
-    id?: StringFilter<"Item"> | string;
-    articleUrl?: StringFilter<"Item"> | string;
+    id?: StringFilter<'Item'> | string;
+    articleUrl?: StringFilter<'Item'> | string;
     comments?: CommentListRelationFilter;
   };
 
@@ -8549,7 +8549,7 @@ export namespace Prisma {
       NOT?: ItemWhereInput | ItemWhereInput[];
       comments?: CommentListRelationFilter;
     },
-    "id" | "articleUrl"
+    'id' | 'articleUrl'
   >;
 
   export type ItemOrderByWithAggregationInput = {
@@ -8568,19 +8568,19 @@ export namespace Prisma {
     NOT?:
       | ItemScalarWhereWithAggregatesInput
       | ItemScalarWhereWithAggregatesInput[];
-    id?: StringWithAggregatesFilter<"Item"> | string;
-    articleUrl?: StringWithAggregatesFilter<"Item"> | string;
+    id?: StringWithAggregatesFilter<'Item'> | string;
+    articleUrl?: StringWithAggregatesFilter<'Item'> | string;
   };
 
   export type TokenWhereInput = {
     AND?: TokenWhereInput | TokenWhereInput[];
     OR?: TokenWhereInput[];
     NOT?: TokenWhereInput | TokenWhereInput[];
-    id?: IntFilter<"Token"> | number;
-    userId?: StringFilter<"Token"> | string;
-    refreshToken?: StringFilter<"Token"> | string;
-    dateAdded?: DateTimeFilter<"Token"> | Date | string;
-    dateUpdated?: DateTimeFilter<"Token"> | Date | string;
+    id?: IntFilter<'Token'> | number;
+    userId?: StringFilter<'Token'> | string;
+    refreshToken?: StringFilter<'Token'> | string;
+    dateAdded?: DateTimeFilter<'Token'> | Date | string;
+    dateUpdated?: DateTimeFilter<'Token'> | Date | string;
     user?: XOR<UserScalarRelationFilter, UserWhereInput>;
   };
 
@@ -8599,13 +8599,13 @@ export namespace Prisma {
       AND?: TokenWhereInput | TokenWhereInput[];
       OR?: TokenWhereInput[];
       NOT?: TokenWhereInput | TokenWhereInput[];
-      userId?: StringFilter<"Token"> | string;
-      refreshToken?: StringFilter<"Token"> | string;
-      dateAdded?: DateTimeFilter<"Token"> | Date | string;
-      dateUpdated?: DateTimeFilter<"Token"> | Date | string;
+      userId?: StringFilter<'Token'> | string;
+      refreshToken?: StringFilter<'Token'> | string;
+      dateAdded?: DateTimeFilter<'Token'> | Date | string;
+      dateUpdated?: DateTimeFilter<'Token'> | Date | string;
       user?: XOR<UserScalarRelationFilter, UserWhereInput>;
     },
-    "id"
+    'id'
   >;
 
   export type TokenOrderByWithAggregationInput = {
@@ -8629,11 +8629,11 @@ export namespace Prisma {
     NOT?:
       | TokenScalarWhereWithAggregatesInput
       | TokenScalarWhereWithAggregatesInput[];
-    id?: IntWithAggregatesFilter<"Token"> | number;
-    userId?: StringWithAggregatesFilter<"Token"> | string;
-    refreshToken?: StringWithAggregatesFilter<"Token"> | string;
-    dateAdded?: DateTimeWithAggregatesFilter<"Token"> | Date | string;
-    dateUpdated?: DateTimeWithAggregatesFilter<"Token"> | Date | string;
+    id?: IntWithAggregatesFilter<'Token'> | number;
+    userId?: StringWithAggregatesFilter<'Token'> | string;
+    refreshToken?: StringWithAggregatesFilter<'Token'> | string;
+    dateAdded?: DateTimeWithAggregatesFilter<'Token'> | Date | string;
+    dateUpdated?: DateTimeWithAggregatesFilter<'Token'> | Date | string;
   };
 
   export type UserCreateInput = {
@@ -9981,12 +9981,12 @@ export namespace Prisma {
     AND?: PostScalarWhereInput | PostScalarWhereInput[];
     OR?: PostScalarWhereInput[];
     NOT?: PostScalarWhereInput | PostScalarWhereInput[];
-    id?: IntFilter<"Post"> | number;
-    title?: StringNullableFilter<"Post"> | string | null;
-    content?: StringFilter<"Post"> | string;
-    userId?: StringFilter<"Post"> | string;
-    dateCreated?: DateTimeFilter<"Post"> | Date | string;
-    dateUpdated?: DateTimeFilter<"Post"> | Date | string;
+    id?: IntFilter<'Post'> | number;
+    title?: StringNullableFilter<'Post'> | string | null;
+    content?: StringFilter<'Post'> | string;
+    userId?: StringFilter<'Post'> | string;
+    dateCreated?: DateTimeFilter<'Post'> | Date | string;
+    dateUpdated?: DateTimeFilter<'Post'> | Date | string;
   };
 
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {
@@ -10021,13 +10021,13 @@ export namespace Prisma {
     AND?: CommentScalarWhereInput | CommentScalarWhereInput[];
     OR?: CommentScalarWhereInput[];
     NOT?: CommentScalarWhereInput | CommentScalarWhereInput[];
-    id?: StringFilter<"Comment"> | string;
-    content?: StringFilter<"Comment"> | string;
-    userId?: StringFilter<"Comment"> | string;
-    articleUrl?: StringFilter<"Comment"> | string;
-    articleTitle?: StringNullableFilter<"Comment"> | string | null;
-    dateCreated?: DateTimeFilter<"Comment"> | Date | string;
-    dateUpdated?: DateTimeFilter<"Comment"> | Date | string;
+    id?: StringFilter<'Comment'> | string;
+    content?: StringFilter<'Comment'> | string;
+    userId?: StringFilter<'Comment'> | string;
+    articleUrl?: StringFilter<'Comment'> | string;
+    articleTitle?: StringNullableFilter<'Comment'> | string | null;
+    dateCreated?: DateTimeFilter<'Comment'> | Date | string;
+    dateUpdated?: DateTimeFilter<'Comment'> | Date | string;
   };
 
   export type TokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -10062,11 +10062,11 @@ export namespace Prisma {
     AND?: TokenScalarWhereInput | TokenScalarWhereInput[];
     OR?: TokenScalarWhereInput[];
     NOT?: TokenScalarWhereInput | TokenScalarWhereInput[];
-    id?: IntFilter<"Token"> | number;
-    userId?: StringFilter<"Token"> | string;
-    refreshToken?: StringFilter<"Token"> | string;
-    dateAdded?: DateTimeFilter<"Token"> | Date | string;
-    dateUpdated?: DateTimeFilter<"Token"> | Date | string;
+    id?: IntFilter<'Token'> | number;
+    userId?: StringFilter<'Token'> | string;
+    refreshToken?: StringFilter<'Token'> | string;
+    dateAdded?: DateTimeFilter<'Token'> | Date | string;
+    dateUpdated?: DateTimeFilter<'Token'> | Date | string;
   };
 
   export type UserCreateWithoutPostsInput = {
