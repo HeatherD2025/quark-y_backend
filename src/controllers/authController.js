@@ -52,12 +52,12 @@ export const login = async (req, res) => {
 
 // REGISTER NEW USERS
 export const register = async (req, res) => {
-  const { username, email, password, avatar} = req.body;
+  const { username, email, password, avatarId} = req.body;
 
-  if (!username || !email || !password || !avatar) {
+  if (!username || !email || !password || !avatarId) {
     return res.status(400).json({ error: 'Required fields missing.' });
   }
-  if (!allowedAvatarIds.includes(avatar)) {
+  if (!allowedAvatarIds.includes(avatarId)) {
       return res.status(400).json({ message: 'Invalid avatar selected' });
   }
 
@@ -78,7 +78,7 @@ export const register = async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        avatar,
+        avatarId,
         isAdmin: false,
       },
     });
@@ -111,7 +111,7 @@ export const getAllUsers = async (req, res) => {
         id: true,
         username: true,
         email: true,
-        role: true,
+        avatarId: true,
         isAdmin: true,
         dateCreated: true,
         dateUpdated: true

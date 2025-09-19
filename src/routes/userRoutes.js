@@ -9,9 +9,9 @@ import {
 
 const router = express.Router();
 
-router.get('/user', loggedIn, getMe);
-router.put('/user', loggedIn, updateAvatar);
-router.delete('/user', loggedIn, deleteOwnAccount);
-router.delete('/user', loggedIn, removeAvatar)
+router.get('/me', loggedIn, getMe);
+router.patch('/me/avatar', loggedIn, updateAvatar);
+router.delete('/me/avatar', loggedIn, removeAvatar);
+router.delete('/me', loggedIn, deleteOwnAccount);
 
 export default router;
