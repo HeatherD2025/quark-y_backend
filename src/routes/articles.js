@@ -1,8 +1,12 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import { loggedIn } from '../middleware/loggedIn';
+import { getArticle } from '../controllers/articleController';
 
 const router = express.Router();
 const prisma = new PrismaClient();
+
+router.get('/articles/:articleId', loggedIn, getArticle);
 
 router.get('/', async (req, res) => {
   try {
