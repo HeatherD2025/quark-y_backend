@@ -2,15 +2,15 @@ import prisma from "../common/prismaClient.js";
 
 // GET USER
 export const getMe = async (req, res) => {
+  const userId = req.user.id;
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.user.id },
+      where: { id: userId },
       select: {
         id: true,
         username: true,
         email: true,
         avatarId: true,
-        isAdmin: true,
         dateCreated: true,
         dateUpdated: true,
       },

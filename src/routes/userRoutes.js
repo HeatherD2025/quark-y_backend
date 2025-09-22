@@ -3,15 +3,13 @@ import { loggedIn } from '../middleware/loggedIn.js';
 import {
   getMe,
   updateAvatar,
-  deleteOwnAccount,
   removeAvatar
 } from '../controllers/userController.js';
 
 const router = express.Router();
 
 router.get('/me', loggedIn, getMe);
-router.patch('/me/avatar', loggedIn, updateAvatar);
-router.delete('/me/avatar', loggedIn, removeAvatar);
-router.delete('/me', loggedIn, deleteOwnAccount);
+router.patch('/user/avatar', loggedIn, updateAvatar);    // Update avatar
+router.delete('/user/avatar', loggedIn, removeAvatar);
 
 export default router;

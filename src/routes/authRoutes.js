@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/register', register);  
 router.post('/login', login); 
 // admin-only access
-router.get('/', loggedIn, adminOnly, getAllUsers);
+router.get('/getAllUsers', loggedIn, adminOnly, getAllUsers);
 router.delete('/:userid', loggedIn, adminOnly, deleteUserById);  
 
 export default router;
