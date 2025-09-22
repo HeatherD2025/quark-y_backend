@@ -22,8 +22,8 @@ async function main() {
       data: {
         articleUrl,
         headline: "placeholder headline",
-        content: "placeholder content for this article",
         publishedAt: new Date(),
+        body: "This is placeholder article body text." 
       },
     });
 
