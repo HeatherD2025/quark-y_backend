@@ -11,7 +11,7 @@ export const getArticle = async (req, res) => {
         headline: true,
         body: true,
         publishedAt: true,
-        comments: true
+        comments: true,
       },
     });
 

@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from '../common/prismaClient.js';
 import { allowedAvatarIds } from '../config/allowedAvatars.js';
+import 'dotenv/config';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 

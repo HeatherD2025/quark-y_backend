@@ -1,14 +1,13 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import dotenv from "dotenv";
+import 'dotenv/config';
 
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import articleRouter from "./routes/articles.js";
 
-dotenv.config();
 
 const app = express();
 
