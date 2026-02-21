@@ -1,3 +1,4 @@
+import prisma from "./common/prismaClient.js";
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
@@ -6,7 +7,8 @@ import 'dotenv/config';
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
-import articleRouter from "./routes/articles.js";
+import articleRoutes from "./routes/articlesRoutes.js";
+import { getNasa } from "./services/nasaService.js";
 
 
 const app = express();
@@ -21,7 +23,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.use("/api/articles", articleRouter);
+app.use("/api/articles", articleRoutes);
 
 // API Routes
 app.use("/api/auth", authRoutes);
@@ -58,7 +60,7 @@ app.get("/health", (req, res) => {
 });
 
 // 404 for unknown API routes
-app.use(/.*/, (req, res) => {
+app.use("*", (req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
@@ -69,17 +71,5 @@ app.use((err, req, res, next) => {
     .status(err.status || 500)
     .json({ error: err.message || "Internal server error" });
 });
-
-if (app._router && app._router.stack) {
-  app._router.stack.forEach((layer) => {
-    if (layer.route) {
-      console.log(
-        `${Object.keys(layer.route.methods)[0].toUpperCase()} ${
-          layer.route.path
-        }`
-      );
-    }
-  });
-}
 
 export default app;
