@@ -60,8 +60,11 @@ app.get("/health", (req, res) => {
 });
 
 // 404 for unknown API routes
-app.use("/.*/", (req, res) => {
-  res.status(404).json({ error: "Route not found" });
+app.use((req, res) => {
+  res.status(404).json({ 
+    error: "Route not found",
+    path: req.originalUrl 
+  });
 });
 
 // Generic error handler
