@@ -42,6 +42,16 @@ app.get('/api/articles/:articleUrl', async (req, res) => {
   res.json(article);
 })
 
+app.get("/api/nasa", async (req, res) => {
+  try {
+    const data = await getNasa(req.query);
+    res.json(data)
+  } catch (error) {
+    res.status(500).json({ error: "NASA image fetch failed" })    
+  }
+});
+
+
 // Health Check
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
