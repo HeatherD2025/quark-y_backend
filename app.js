@@ -3,10 +3,10 @@ import cors from "cors";
 import morgan from "morgan";
 import 'dotenv/config';
 
-import authRoutes from "./routes/authRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
-import commentRoutes from "./routes/commentRoutes.js";
-import articleRouter from "./routes/articles.js";
+import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
+import commentRoutes from "./src/routes/commentRoutes.js";
+import articleRouter from "./src/routes/articles.js";
 
 
 const app = express();
